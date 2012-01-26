@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/css/default-theme/default.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/css/admin.css" media="screen" />
+        <title><h:outputText value="ACCMM CRM | Cadastro de Imagens dos Produtos" /></title>
+    </h:head>
+
+    <h:body style="background: #ffffff;">
+
+        <h:panelGrid style="width: 100%;">
+
+            <h:form>
+
+                <h:messages />
+
+                <fieldset>
+                    <legend>Imagens dos Produtos</legend>
+                    <p:fileUpload fileUploadListener="#{imageUpload.handleImageUpload}"  
+                                  mode="advanced"  
+                                  update="messages"   
+                                  multiple="true"  
+                                  sizeLimit="100000"   
+                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="height: 220px;" cancelLabel="Cancelar" label="Escolher"/>  
+                    <p:growl id="messages" showDetail="true"/>
+                </fieldset><br/>
+
+            </h:form>
+
+        </h:panelGrid>
+
+    </h:body>
+
+</html>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/templates/default_admin.xhtml">
+
+    <ui:define name="titulo">Cadastro de Imagens dos Produtos</ui:define>
+
+    <ui:define name="content">
+        <p:panel id="panel" header="Módulos" style="width: 800px;">
+            <h:form>
+
+                <h:messages />
+
+                <fieldset>
+                    <legend>Imagens dos Produtos</legend>
+
+                    <p class="form-row">
+                    <h:outputLabel for="nmProduto" value="Nome: " />
+                    <h:inputText id="nmProduto" value="#{produtoBean.produto.nmProduto}" styleClass="size5"/>
+                    </p>
+                    
+                    <p class="form-row">
+                    <h:outputLabel for="categoria" value="Categoria: " />
+                    <h:selectOneMenu id="categoria" value="#{produtoBean.produto.categoria}" styleClass="size5">
+                        <f:selectItem itemLabel="Selecione ..." itemValue="" />
+                        <f:selectItems value="#{categoriaBean.listItems}" />
+                        <f:converter binding="#{categoriaBean.converter}" />
+                    </h:selectOneMenu>
+                    </p>
+                    
+                    <p class="form-row">
+                    <h:outputLabel for="vlProduto" value="Valor: " />
+                    <h:inputText id="vlProduto" value="#{produtoBean.produto.vlProduto}" styleClass="size5"/>
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="dsProdutoCurta" value="Descrição Curta: " />
+                    <h:inputTextarea id="dsProdutoCurta" value="#{produtoBean.produto.dsProdutoCurta}" styleClass="size5"/>
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="dsProdutoLonga" value="Descrição Longa: " />
+                    <h:inputTextarea id="dsProdutoLonga" value="#{produtoBean.descricaoCompleta}" styleClass="size5"/>
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="status" value="Status: " />
+                    <h:selectOneMenu id="status" value="#{produtoBean.produto.status}" required="true" requiredMessage="Informe o Status deste Produto" styleClass="size5">
+                        <f:selectItem itemLabel="Selecione ..." itemValue="" />
+                        <f:selectItems value="#{produtoStatusBean.listItems}" />
+                        <f:converter binding="#{produtoStatusBean.converter}" />
+                    </h:selectOneMenu>
+                    </p>
+                </fieldset><br/>
+
+                <p:commandButton action="#{produtoBean.inserir}" value="Salvar" update="panel" rendered="#{!produtoBean.editando}"/>
+                <p:commandButton action="#{produtoBean.confirmarEdicao}" value="Salvar" update="panel" rendered="#{produtoBean.editando}"/>
+                <p:commandButton action="#{produtoBean.cancelarEdicao}" value="Cancelar" update="panel" rendered="#{produtoBean.editando}" />
+                <br /><br />
+            </h:form>
+
+            <h:form>
+
+                <p:dataTable value="#{produtoBean.produtos}" id="list" var="item">
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Ações" /></f:facet>
+                        <p:commandLink action="#{produtoBean.editar}" update="panel" styleClass="action">
+                            <h:outputText value="Editar" />
+                            <f:setPropertyActionListener target="#{produtoBean.produto}" value="#{item}" />
+                        </p:commandLink> 
+                        <p:commandLink process="@this" oncomplete="confirm.show()" styleClass="action">
+                            <h:outputText value="Excluir" />
+                            <f:setPropertyActionListener target="#{produtoBean.produto}" value="#{item}" />
+                        </p:commandLink>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Nome" /></f:facet>
+                        <h:outputText value="#{item.nmProduto}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Descrição" /></f:facet>
+                        <h:outputText value="#{item.dsProdutoCurta}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Categoria" /></f:facet>
+                        <h:outputText value="#{item.categoria.nmCategoria}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Status" /></f:facet>
+                        <h:outputText value="#{item.status.nmStatus}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Data de Inclusão" /></f:facet>
+                        <h:outputText value="#{item.created}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+
+        <h:form>
+            <p:confirmDialog message="Deseja realmente excluir este registro?" header="Confirmar exclusão do Registro" severity="alert" widgetVar="confirm">
+                <p:commandButton value="Sim" actionListener="#{produtoBean.excluir}" oncomplete="confirm.hide()" update="panel" />
+                <p:commandButton value="Não" actionListener="#{produtoBean.cancelarExclusao}" oncomplete="confirm.hide()" />
+            </p:confirmDialog>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

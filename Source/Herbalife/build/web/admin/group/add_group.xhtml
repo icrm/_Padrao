@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/templates/default_admin.xhtml">
+
+    <ui:define name="titulo">Grupos</ui:define>
+
+    <ui:define name="content">
+        <p:panel id="panel" header="Grupos de Usuários" style="width: 800px;">
+            <h:form>
+
+                <h:messages />
+
+                <fieldset>
+
+                    <legend>Grupo</legend>
+
+                    <p class="form-row">
+                    <h:outputLabel for="nmGroup" value="Nome: " />
+                    <h:inputText id="nmGroup" value="#{groupBean.group.nmGroup}" styleClass="size5"/>
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="dsGroup" value="Descrição: " />
+                    <h:inputTextarea id="dsGroup" value="#{groupBean.group.dsGroup}" styleClass="size5"/>
+                    </p>
+
+                </fieldset><br />
+
+                <fieldset>
+
+                    <legend>Páginas</legend>
+                    <p:tree value="#{pageTreeBean.node}" selectionMode="checkbox" selection="#{pageTreeBean.selectedNodes}"
+                            propagateSelectionDown="true" propagateSelectionUp="true" var="node" expanded="true">
+                        <p:treeNode>
+                            <h:outputText value="#{node}" />
+                        </p:treeNode>
+                    </p:tree>
+
+                </fieldset><br />
+
+                <fieldset>
+                    <legend><h:outputText value="Diretivas" /></legend>
+
+                    <p:pickList value="#{policyPickListBean.policies}" var="policy" 
+                                itemLabel="#{policy.nmPolicy}" itemValue="#{policy}" converter="#{policyBean.converter}"
+                                addAllLabel="Adicionar Todos" addLabel="Adicionar"
+                                removeAllLabel="Remover Todos" removeLabel="Remover" id="pickList">
+                        <f:facet name="sourceCaption">Diretivas Disponíveis</f:facet>
+                        <f:facet name="targetCaption">Diretivas Associadas</f:facet>
+                    </p:pickList>
+                </fieldset><br />
+
+                <p:commandButton action="#{groupBean.inserir}" value="Salvar" update="panel" rendered="#{!groupBean.editando}"/>
+                <p:commandButton action="#{groupBean.confirmarEdicao}" value="Salvar" update="panel" rendered="#{groupBean.editando}"/>
+                <p:commandButton action="#{groupBean.cancelarEdicao}" value="Cancelar" update="panel" rendered="#{groupBean.editando}"/>
+                <br /><br />
+
+            </h:form>
+
+            <h:form>
+                <p:dataTable value="#{groupBean.groups}" id="list" var="item">
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Ações" /></f:facet>
+                        <p:commandLink action="#{groupBean.editar}" update="panel" styleClass="action">
+                            <h:outputText value="Editar" />
+                            <f:setPropertyActionListener target="#{groupBean.group}" value="#{item}" />
+                        </p:commandLink>
+                        <p:commandLink process="@this" oncomplete="confirm.show()" styleClass="action">
+                            <h:outputText value="Excluir" />
+                            <f:setPropertyActionListener target="#{groupBean.group}" value="#{item}" />
+                        </p:commandLink>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Nome" /></f:facet>
+                        <h:outputText value="#{item.nmGroup}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Descrição" /></f:facet>
+                        <h:outputText value="#{item.dsGroup}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Data de Inclusão" /></f:facet>
+                        <h:outputText value="#{item.created}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+
+
+        <h:form>
+            <p:confirmDialog message="Deseja realmente excluir este registro?" header="Confirmar exclusão do Registro" severity="alert" widgetVar="confirm">
+                <p:commandButton value="Sim" action="#{groupBean.excluir}" oncomplete="confirm.hide()" update=":panel" />
+                <p:commandButton value="Não" action="#{groupBean.cancelarExclusao}" oncomplete="confirm.hide()" />
+            </p:confirmDialog>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

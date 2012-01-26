@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/templates/default_admin.xhtml">
+
+    <ui:define name="titulo">Cadastro de Diretivas</ui:define>
+
+    <ui:define name="content">
+        <p:panel id="panel" header="Diretivas" style="width: 800px;">
+            <h:form>
+
+                <h:messages />
+
+                <fieldset>
+
+                    <legend>Diretiva</legend>
+
+                    <p class="form-row">
+                    <h:outputLabel for="nmPolicy" value="Nome: " />
+                    <h:inputText id="nmPolicy" value="#{policyBean.policy.nmPolicy}" styleClass="size5"/>
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="dsPolicy" value="Descrição: " />
+                    <h:inputTextarea id="dsPolicy" value="#{policyBean.policy.dsPolicy}" styleClass="size5"/>
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="nmFunction" value="Nome da Função Associada: "/>
+                    <h:inputText id="nmFunction" value="#{policyBean.policy.nmFunction}" styleClass="size5"/>
+                    </p>
+
+                </fieldset><br />
+
+                <p:commandButton action="#{policyBean.inserir}" value="Salvar" update="panel" rendered="#{!policyBean.editando}"/>
+                <p:commandButton action="#{policyBean.confirmarEdicao}" value="Salvar" update="panel" rendered="#{policyBean.editando}"/>
+                <p:commandButton action="#{policyBean.cancelarEdicao}" value="Cancelar" update="panel" rendered="#{policyBean.editando}"/>
+                <br /><br />
+            </h:form>
+
+            <h:form>
+
+                <p:dataTable value="#{policyBean.policies}" id="list" var="item" paginator="true" rows="10">
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Ações" /></f:facet>
+                        <p:commandLink action="#{policyBean.editar}" update="panel" styleClass="action">
+                            <h:outputText value="Editar" />
+                            <f:setPropertyActionListener target="#{policyBean.policy}" value="#{item}" />
+                        </p:commandLink>
+                        <p:commandLink process="@this" oncomplete="confirm.show()" styleClass="action">
+                            <h:outputText value="Excluir" />
+                            <f:setPropertyActionListener target="#{policyBean.policy}" value="#{item}" />
+                        </p:commandLink>
+                    </p:column>
+
+                    <p:column sortBy="#{item.nmPolicy}">
+                        <f:facet name="header"><h:outputText value="Nome" /></f:facet>
+                        <h:outputText value="#{item.nmPolicy}" />
+                    </p:column>
+
+                    <p:column sortBy="#{item.dsPolicy}">
+                        <f:facet name="header"><h:outputText value="Descrição" /></f:facet>
+                        <h:outputText value="#{item.dsPolicy}" />
+                    </p:column>
+
+                    <p:column sortBy="#{item.nmFunction}">
+                        <f:facet name="header"><h:outputText value="Função Associada" /></f:facet>
+                        <h:outputText value="#{item.nmFunction}" />
+                    </p:column>
+
+                    <p:column sortBy="#{item.created}">
+                        <f:facet name="header"><h:outputText value="Data de Inclusão" /></f:facet>
+                        <h:outputText value="#{item.created}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+
+
+
+        <h:form>
+            <p:confirmDialog message="Deseja realmente excluir este registro?" header="Confirmar exclusão do Registro" severity="alert" widgetVar="confirm">
+                <p:commandButton value="Sim" action="#{policyBean.excluir}" oncomplete="confirm.hide()" update=":panel" />
+                <p:commandButton value="Não" action="#{policyBean.cancelarExclusao}" oncomplete="confirm.hide()" />
+            </p:confirmDialog>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

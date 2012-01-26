@@ -1,0 +1,114 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html { font-family: Verdana,Arial,sans-serif; }
+
+fieldset.login { padding: 10px; }
+fieldset.login legend { font-size: 1.0em; }
+
+fieldset { padding: 10px; }
+
+label {
+    display: inline-block;
+    width: 100px;
+}
+
+a.action { margin: 2px; }
+
+p.form-row {
+    margin: 3px;
+    vertical-align: top;
+}
+
+/* Size 1 */
+p.form-row input.size1 { width: 50px; }
+p.form-row select.size1 { width: 52px; }
+p.form-row textarea.size1 { width: 50px; }
+
+/* Size 2 */
+p.form-row input.size2 { width: 100px; }
+p.form-row select.size2 { width: 102px; }
+p.form-row textarea.size2 { width: 100px; }
+
+/* Size 3 */
+p.form-row input.size3 { width: 150px; }
+p.form-row select.size3 { width: 152px; }
+p.form-row textarea.size3 { width: 150px; }
+
+/* Size 4 */
+p.form-row input.size4 { width: 200px; }
+p.form-row select.size4 { width: 202px; }
+p.form-row textarea.size4 { width: 200px; }
+
+/* Size 5 */
+p.form-row input.size5 { width: 250px; }
+p.form-row select.size5 { width: 252px; }
+p.form-row textarea.size5 { width: 250px; }
+
+/* Size 6 */
+p.form-row input.size6 { width: 300px; }
+p.form-row select.size6 { width: 302px; }
+p.form-row textarea.size6 { width: 300px; }
+
+#container { text-align:  center; }
+
+.center-login {
+    height: 150px;
+    left: 50%;
+    margin: 0 auto;
+    margin-left: -125px;
+    margin-top: -75px;
+    position: absolute;
+    text-align: left;
+    top: 50%;
+    width: 250px;
+}
+.center-login label {
+    display: inline-block;
+    width: 80px;
+}
+
+.global-error, .global-success {
+    border-width: 2px;
+    border-style: solid;
+    list-style: none;
+    padding: 5px;
+}
+.global-error {
+    background-color: #e8fde8;
+    border-color: #cd0a0a;
+    color: #cd0a0a;
+}
+
+.global-error ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.global-success {
+    background-color: #dffddd;
+    border-color: #0acd22;
+    color: #0acd22;
+}
+
+.local-error {
+    color: #cd0a0a;
+    font-style: italic;
+    padding: 3px;
+}
+
+.top-half-col, .top-col { vertical-align: top;}
+.top-half-col, .half-col { width: 50%; }
+
+
+.ui-autocomplete, .ui-autocomplete-panel {
+    background: #000000;
+    color: #ffffff;
+}
+
+input, textarea, select {
+    border: 1px solid #cdcdcd;
+}

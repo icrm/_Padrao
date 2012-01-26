@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/templates/default_admin.xhtml">
+
+    <ui:define name="titulo">Móulos</ui:define>
+
+    <ui:define name="content">
+        <p:panel id="panel" header="Usuários" style="width: 800px;">
+            <h:form>
+                <h:messages globalOnly="true" styleClass="global-error" />
+
+                <fieldset>
+                    <legend><h:outputText value="Usuário" /></legend>
+
+                    <p class="form-row">
+                    <h:outputLabel for="nmUser" value="Nome: " />
+                    <h:inputText
+                        id="nmUser"
+                        value="#{userBean.user.nmUser}"
+                        required="true"
+                        requiredMessage="Informe o Nome do Usuário"/>
+                    <h:message for="nmUser" styleClass="local-error" />
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="dsEmail" value="E-mail: " />
+                    <h:inputText
+                        id="dsEmail"
+                        value="#{userBean.user.dsEmail}"
+                        readonly="#{userBean.editando}"
+                        required="true"
+                        requiredMessage="Informe o E-mail do Usuário.">
+                        <f:validator validatorId="br.com.icrm.validator.Email" />
+                    </h:inputText>
+                    <h:message for="dsEmail" styleClass="local-error" />
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="dsPassword" value="Senha: " rendered="#{!userBean.editando}"/>
+                    <h:inputSecret
+                        id="dsPassword"
+                        value="#{userBean.user.dsPassword}"
+                        rendered="#{!userBean.editando}"
+                        required="true"
+                        requiredMessage="Informe a Senha do Usuário"/>
+                    <h:message for="dsPassword" styleClass="local-error" />
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="group" value="Grupo: " />
+                    <h:selectOneMenu id="group" value="#{userBean.user.group}" required="true" requiredMessage="Selecione um Grupo de Usuários.">
+                        <f:selectItem itemLabel="Selecione ..." itemValue="" />
+                        <f:selectItems value="#{groupBean.listItems}" />
+                        <f:converter binding="#{groupBean.converter}" />
+                    </h:selectOneMenu>
+                    <h:message for="group" styleClass="local-error" />
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="status" value="Status: " />
+                    <h:selectOneMenu id="status" value="#{userBean.user.status}" required="true" requiredMessage="Informe o Status deste Usuário">
+                        <f:selectItem itemLabel="Selecione ..." itemValue="" />
+                        <f:selectItems value="#{userStatusBean.listItems}" />
+                        <f:converter binding="#{userStatusBean.converter}" />
+                    </h:selectOneMenu>
+                    <h:message for="status" styleClass="local-error" />
+                    </p>
+                </fieldset><br />
+
+                <p:commandButton action="#{userBean.inserir}" value="Salvar" update="panel" rendered="#{!userBean.editando}"/>
+                <p:commandButton action="#{userBean.confirmarEdicao}" value="Salvar" update="panel" rendered="#{userBean.editando}"/>
+                <p:commandButton action="#{userBean.cancelarEdicao}" value="Cancelar" update="panel" rendered="#{userBean.editando}"/>
+                <br /><br />
+            </h:form>
+
+            <h:form>
+                <p:dataTable value="#{userBean.users}" id="list" var="item" paginator="true" rows="10">
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Ações" /></f:facet>
+                        <p:commandLink action="#{userBean.editar}" update="panel" styleClass="action">
+                            <h:outputText value="Editar" />
+                            <f:setPropertyActionListener target="#{userBean.user}" value="#{item}" />
+                        </p:commandLink>
+                        <p:commandLink process="@this" oncomplete="confirm.show()">
+                            <h:outputText value="Excluir" />
+                            <f:setPropertyActionListener target="#{userBean.user}" value="#{item}" />
+                        </p:commandLink>
+                    </p:column>
+
+                    <p:column sortBy="#{item.nmUser}">
+                        <f:facet name="header"><h:outputText value="Nome" /></f:facet>
+                        <h:outputText value="#{item.nmUser}" />
+                    </p:column>
+
+                    <p:column sortBy="#{item.dsEmail}">
+                        <f:facet name="header"><h:outputText value="E-mail" /></f:facet>
+                        <h:outputText value="#{item.dsEmail}" />
+                    </p:column>
+
+                    <p:column sortBy="#{item.status.nmStatus}">
+                        <f:facet name="header"><h:outputText value="Status" /></f:facet>
+                        <h:outputText value="#{item.status.nmStatus}" />
+                    </p:column>
+
+                    <p:column sortBy="#{item.created}">
+                        <f:facet name="header"><h:outputText value="Data de Inclusão" /></f:facet>
+                        <h:outputText value="#{item.created}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+
+
+
+        <h:form>
+            <p:confirmDialog message="Deseja realmente excluir este registro?" header="Confirmar exclusão do Registro" severity="alert" widgetVar="confirm">
+                <p:commandButton value="Sim" action="#{userBean.excluir}" oncomplete="confirm.hide()" update=":panel" />
+                <p:commandButton value="Não" action="#{userBean.cancelarExclusao}" oncomplete="confirm.hide()" />
+            </p:confirmDialog>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

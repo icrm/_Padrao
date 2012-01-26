@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/css/default-theme/default.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/css/admin.css" media="screen" />
+        <title><h:outputText value="ACCMM CRM | " /><ui:insert name="titulo" /></title>
+    </h:head>
+
+    <h:body>
+        
+        <h:panelGrid columns="1" columnClasses="top-col">
+            <h:form>
+                <p:panel>
+                    <p:commandLink action="#{login.logout}" ajax="false">
+                        <h:outputText value="Sair"/>
+                    </p:commandLink>
+                </p:panel>
+            </h:form>
+        </h:panelGrid>
+
+        <h:panelGrid columns="2" columnClasses="top-col,top-col">
+
+            <h:form>
+                <p:panel id="menuPanel" header="Menu" style="width: 260px;">
+                    <p:menu model="#{adminMenu.menu}" type="tiered" />
+                </p:panel>
+            </h:form>
+
+            <ui:insert name="content">Conteúdo...</ui:insert>
+
+        </h:panelGrid>
+
+    </h:body>
+
+</html>

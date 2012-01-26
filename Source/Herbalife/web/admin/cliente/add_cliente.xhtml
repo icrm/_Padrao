@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/templates/default_admin.xhtml">
+
+    <ui:define name="titulo">Cadastro de Clientes</ui:define>
+
+    <ui:define name="content">
+        <p:panel id="panel" header="Módulos" style="width: 800px;">
+            <h:form>
+
+                <h:messages />
+
+                <fieldset>
+                    <legend>Cliente</legend>
+
+                    <p class="form-row">
+                    <h:outputLabel for="nmCliente" value="Nome: " />
+                    <h:inputText id="nmCliente" value="#{clienteBean.cliente.nmCliente}" styleClass="size5"/>
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="dsEmail" value="Email: " />
+                    <h:inputText id="dsEmail" value="#{clienteBean.cliente.dsEmail}" styleClass="size5"/>
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="dsLogin" value="Login " />
+                    <h:inputText id="dsLogin" value="#{clienteBean.cliente.dsLogin}" styleClass="size5"/>
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="dsSenha" value="Senha: " />
+                    <h:inputSecret id="dsSenha" value="#{clienteBean.cliente.dsSenha}" styleClass="size5"/>
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="nuDDDRes" value="Telefone Residencial " />
+                    ( <h:inputText id="nuDDDRes" value="#{clienteBean.cliente.nuDddRes}" maxlength="2" size="2"/> )
+                    <h:inputText id="nuTelRes" value="#{clienteBean.cliente.nuTelRes}" styleClass="size4"/>
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="nuDDDCel" value="Celular: " />
+                    ( <h:inputText id="nuDDDCel" value="#{clienteBean.cliente.nuDddCel}" maxlength="2" size="2"/> )
+                    <h:inputText id="nuTelCel" value="#{clienteBean.cliente.nuTelCel}" styleClass="size4"/>
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="nuDDDCom" value="Telefone Comercial: " />
+                    ( <h:inputText id="nuDDDCom" value="#{clienteBean.cliente.nuDddCom}" maxlength="2" size="2"/> )
+                    <h:inputText id="nuTelCom" value="#{clienteBean.cliente.nuTelCom}" styleClass="size4"/>
+                    </p>
+                </fieldset><br/>
+
+                <p:commandButton action="#{clienteBean.inserir}" value="Salvar" update="panel" rendered="#{!clienteBean.editando}"/>
+                <p:commandButton action="#{clienteBean.confirmarEdicao}" value="Salvar" update="panel" rendered="#{clienteBean.editando}"/>
+                <p:commandButton action="#{clienteBean.cancelarEdicao}" value="Cancelar" update="panel" rendered="#{clienteBean.editando}" />
+                <br /><br />
+            </h:form>
+
+            <p:lightBox width="50%" height="50%" opacity="0.35" rendered="#{clienteBean.editando}" widgetVar="light">
+                <h:outputLink value="#" >  
+                    <h:outputText value="Adicionar Endereço"/>
+                </h:outputLink>  
+                <f:facet name="inline">
+                    <h:form>
+                        <fieldset>
+                            <legend>Endereço</legend>
+                            <h:outputText value="Cliente : #{clienteEnderecoBean.endereco.cliente.nmCliente}" />
+
+                            <p class="form-row">
+                            <h:outputLabel for="nmEndereco" value="Nome: " />
+                            <h:inputText id="nmEndereco" value="#{clienteEnderecoBean.endereco.nmEndereco}" styleClass="size5"/>
+                            </p>
+
+                            <p class="form-row">
+                            <h:outputLabel for="dsEndereco" value="Endereço: " />
+                            <h:inputText id="dsEndereco" value="#{clienteEnderecoBean.endereco.dsEndereco}" styleClass="size5"/>
+                            </p>
+
+                            <p class="form-row">
+                            <h:outputLabel for="nuEndereco" value="Número: " />
+                            <h:inputText id="nuEndereco" value="#{clienteEnderecoBean.endereco.nuEndereco}" styleClass="size5"/>
+                            </p>
+
+                            <p class="form-row">
+                            <h:outputLabel for="dsComplemento" value="Complemento: " />
+                            <h:inputText id="dsComplemento" value="#{clienteEnderecoBean.endereco.dsComplemento}" styleClass="size5"/>
+                            </p>
+
+                            <p class="form-row">
+                            <h:outputLabel for="dsBairro" value="Bairro: " />
+                            <h:inputText id="dsBairro" value="#{clienteEnderecoBean.endereco.dsBairro}" styleClass="size5"/>
+                            </p>
+
+                            <p class="form-row">
+                            <h:outputLabel for="dsCidade" value="Cidade: " />
+                            <h:inputText id="dsCidade" value="#{clienteEnderecoBean.endereco.dsCidade}" styleClass="size5"/>
+                            </p>
+
+                            <p class="form-row">
+                            <h:outputLabel for="nuCEP" value="CEP: " />
+                            <h:inputText id="nuCEP" value="#{clienteEnderecoBean.endereco.nuCep}" styleClass="size5"/>
+                            </p>
+
+                            <p class="form-row">
+                            <h:outputLabel for="sgUF" value="Estado: " />
+                            <h:inputText id="sgUF" value="#{clienteEnderecoBean.endereco.sgUf}" styleClass="size5"/>
+                            </p>
+                        </fieldset>
+                        
+                        <p:commandButton action="#{clienteEnderecoBean.inserir}" value="Salvar" update="panel" rendered="#{!clienteEnderecoBean.editando}"/>
+                        <p:commandButton action="#{clienteEnderecoBean.confirmarEdicao}" value="Salvar" update="panel" rendered="#{clienteEnderecoBean.editando}"/>
+                        <p:commandButton action="#{clienteEnderecoBean.cancelarEdicao}" value="Cancelar" update="panel" rendered="#{clienteEnderecoBean.editando}"/>
+                    </h:form>
+                </f:facet>
+            </p:lightBox><br/><br/>
+
+            <h:form>
+
+                <p:dataTable value="#{clienteBean.clientes}" id="list" var="item">
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Ações" /></f:facet>
+                        <p:commandLink action="#{clienteBean.editar}" update="panel" styleClass="action">
+                            <h:outputText value="Editar" />
+                            <f:setPropertyActionListener target="#{clienteBean.cliente}" value="#{item}" />
+                            <f:setPropertyActionListener target="#{clienteEnderecoBean.endereco.cliente}" value="#{item}" />
+                        </p:commandLink> 
+                        <p:commandLink process="@this" oncomplete="confirm.show()" styleClass="action">
+                            <h:outputText value="Excluir" />
+                            <f:setPropertyActionListener target="#{clienteBean.cliente}" value="#{item}" />
+                        </p:commandLink>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Nome" /></f:facet>
+                        <h:outputText value="#{item.nmCliente}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Descrição" /></f:facet>
+                        <h:outputText value="#{item.dsEmail}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Pai" /></f:facet>
+                        <h:outputText value="#{item.dsLogin}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Status" /></f:facet>
+                        <h:outputText value="#{item.nuTelCel}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Data de Inclusão" /></f:facet>
+                        <h:outputText value="#{item.created}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
+
+        <h:form>
+            <p:confirmDialog message="Deseja realmente excluir este registro?" header="Confirmar exclusão do Registro" severity="alert" widgetVar="confirm">
+                <p:commandButton value="Sim" actionListener="#{clienteBean.excluir}" oncomplete="confirm.hide()" update="panel" />
+                <p:commandButton value="Não" actionListener="#{clienteBean.cancelarExclusao}" oncomplete="confirm.hide()" />
+            </p:confirmDialog>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

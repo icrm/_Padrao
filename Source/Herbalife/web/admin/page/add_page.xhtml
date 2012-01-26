@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/templates/default_admin.xhtml">
+
+    <ui:define name="titulo">Páginas</ui:define>
+
+    <ui:define name="content">
+        <p:panel id="panel" header="Páginas" style="width: 800px;">
+            <h:form>
+
+                <h:messages globalOnly="true" errorClass="global-error" infoClass="global-success"/>
+
+                <fieldset>
+                    <legend>Módulo</legend>
+
+                    <p class="form-row">
+                    <h:outputLabel for="module" value="Módulo: " />
+                    <h:selectOneMenu id="module" value="#{pageBean.page.module}" required="true" requiredMessage="Informe um Módulo para esta Página." styleClass="size5">
+                        <f:selectItem itemLabel="Selecione ..." itemValue="" />
+                        <f:selectItems value="#{moduleBean.listItems}" />
+                        <f:converter binding="#{moduleBean.converter}" />
+                    </h:selectOneMenu>
+                    <h:message for="module" styleClass="local-error" />
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="nmPage" value="Nome: " />
+                    <h:inputText
+                        id="nmPage"
+                        value="#{pageBean.page.nmPage}"
+                        styleClass="size5"
+                        required="true"
+                        requiredMessage="Informe o Nome da Página."/>
+                    <h:message for="nmPage" styleClass="local-error" />
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="dsPage" value="Descrição: " />
+                    <h:inputTextarea id="dsPage" value="#{pageBean.page.dsPage}"  styleClass="size5"/>
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="dsURL" value="URL: " />
+                    <h:inputText
+                        id="dsURL"
+                        value="#{pageBean.page.dsURL}"
+                        styleClass="size5"
+                        required="true"
+                        requiredMessage="Informe a URL da Página."/>
+                    <h:message for="dsURL" styleClass="local-error" />
+                    </p>
+
+                    <p class="form-row">
+                    <h:outputLabel for="status" value="Status: " />
+                    <h:selectOneMenu id="status" value="#{pageBean.page.status}" required="true" requiredMessage="Informe o Status desta Página." styleClass="size5">
+                        <f:selectItem itemLabel="Selecione ..." itemValue="" />
+                        <f:selectItems value="#{pageStatusBean.listItems}" />
+                        <f:converter binding="#{pageStatusBean.converter}" />
+                    </h:selectOneMenu>
+                    <h:message for="status" styleClass="local-error" />
+                    </p>
+
+                    <p class="form-row">
+                    <h:selectBooleanCheckbox id="fgMain" value="#{pageBean.fgMain}" />
+                    <h:outputLabel for="fgMain" value="Tornar esta página principal? " style="width: 300px;margin-left: 5px;"/>
+                    </p>
+
+                    <p class="form-row">
+                    <h:selectBooleanCheckbox id="fgShowMenu" value="#{pageBean.fgShowMenu}" />
+                    <h:outputLabel for="fgShowMenu" value="Não mostrar esta página no menu? " style="width: 300px;margin-left: 5px;"/>
+                    </p>
+                </fieldset><br/>
+
+                <p:commandButton action="#{pageBean.inserir}" value="Salvar" update="panel" rendered="#{!pageBean.editando}"/>
+                <p:commandButton action="#{pageBean.confirmarEdicao}" value="Salvar" update="panel" rendered="#{pageBean.editando}"/>
+                <p:commandButton action="#{pageBean.cancelarEdicao}" value="Cancelar" update="panel" rendered="#{pageBean.editando}"/>
+                <br /><br />
+            </h:form>
+
+            <h:form>
+
+                <p:dataTable value="#{pageBean.pages}" id="list" var="item" paginator="true" rows="10">
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Ações" /></f:facet>
+                        <p:commandLink action="#{pageBean.editar}" update="panel" styleClass="action">
+                            <h:outputText value="Editar" />
+                            <f:setPropertyActionListener target="#{pageBean.page}" value="#{item}" />
+                        </p:commandLink>
+                        <p:commandLink process="@this" oncomplete="confirm.show()" styleClass="action">
+                            <h:outputText value="Excluir" />
+                            <f:setPropertyActionListener target="#{pageBean.page}" value="#{item}" />
+                        </p:commandLink>
+                    </p:column>
+
+                    <p:column sortBy="#{item.nmPage}">
+                        <f:facet name="header"><h:outputText value="Nome" /></f:facet>
+                        <h:outputText value="#{item.nmPage}" />
+                    </p:column>
+
+                    <p:column sortBy="#{item.dsPage}">
+                        <f:facet name="header"><h:outputText value="Descrição" /></f:facet>
+                        <h:outputText value="#{item.dsPage}" />
+                    </p:column>
+
+                    <p:column sortBy="#{item.dsURL}">
+                        <f:facet name="header"><h:outputText value="URL" /></f:facet>
+                        <h:outputText value="#{item.dsURL}" />
+                    </p:column>
+
+                    <p:column sortBy="#{item.module.nmModule}">
+                        <f:facet name="header"><h:outputText value="Módulo" /></f:facet>
+                        <h:outputText value="#{item.module.nmModule}" />
+                    </p:column>
+
+                    <p:column sortBy="#{item.status.nmStatus}">
+                        <f:facet name="header"><h:outputText value="Status" /></f:facet>
+                        <h:outputText value="#{item.status.nmStatus}" />
+                    </p:column>
+
+                    <p:column sortBy="#{item.created}">
+                        <f:facet name="header"><h:outputText value="Data de Inclusão" /></f:facet>
+                        <h:outputText value="#{item.created}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+
+            </h:form>
+        </p:panel>
+
+        <h:form>
+            <p:confirmDialog message="Deseja realmente excluir este registro?" header="Confirmar exclusão do Registro" severity="alert" widgetVar="confirm">
+                <p:commandButton value="Sim" action="#{pageBean.excluir}" oncomplete="confirm.hide()" update=":panel" />
+                <p:commandButton value="Não" action="#{pageBean.cancelarExclusao}" oncomplete="confirm.hide()" />
+            </p:confirmDialog>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

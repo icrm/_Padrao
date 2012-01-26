@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>ACCMM - Login</title>
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/css/default-theme/default.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/css/admin.css" media="screen" />
+    </h:head>
+    <h:body>
+
+        <div id="container">
+            <h:form>
+                <div class="center-login">
+                    <fieldset class="login">
+                        <legend>Login</legend>
+                        <h:outputLabel for="login" value="E-mail: " />
+                        <h:inputText id="login" value="#{login.email}" required="true" requiredMessage="O Campo E-mail deve ser preenchido!" /><br />
+
+                        <h:outputLabel for="password" value="Senha: " />
+                        <h:inputSecret id="password" value="#{login.password}" required="true" requiredMessage="O Campo Senha deve ser preenchido!" /><br />
+
+                        <p:commandButton value="Entrar" action="#{login.login}" update="msgs" ajax="false"/>
+                    </fieldset>
+                    <h:messages id="msgs" styleClass="global-error" />
+                </div>
+            </h:form>
+        </div>
+
+    </h:body>
+</html>
