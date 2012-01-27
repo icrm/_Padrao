@@ -1,7 +1,0 @@
-AtLeastOneConstructor
-CallSuperInConstructor
-AvoidInstantiatingObjectsInLoops
-PreserveStackTrace
-DataflowAnomalyAnalysis
-BeanMembersShouldSerialize
-OnlyOneReturn

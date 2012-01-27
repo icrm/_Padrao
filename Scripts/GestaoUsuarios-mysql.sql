@@ -164,6 +164,7 @@ CREATE TABLE IF NOT EXISTS GU_PAGE (
     DS_PAGE   VARCHAR( 300 ),
     DS_URL    VARCHAR( 100 ) NOT NULL,
     FG_MAIN   CHAR( 1 ),
+    FG_SHOW_MENU CHAR( 1 ),
     STATUS    INTEGER,
     CREATED   TIMESTAMP NOT NULL DEFAULT now(),
     PRIMARY KEY ( CD_PAGE ),
@@ -173,12 +174,12 @@ CREATE TABLE IF NOT EXISTS GU_PAGE (
 SELECT  @CD_PAGE_STATUS_ATIVO := CD_STATUS
 FROM    GU_PAGE_STATUS
 WHERE   NM_STATUS = 'Ativa';
-INSERT INTO GU_PAGE ( CD_MODULE, NM_PAGE, DS_PAGE, DS_URL, FG_MAIN, STATUS ) VALUES 
-( @CD_MODULO_USUARIO, 'Cadastro de Usuários', 'Página de Cadastro de Usuários', '/admin/user/add_user.xhtml', 1,  @CD_PAGE_STATUS_ATIVO ),
-( @CD_MODULO_MODULO, 'Cadastro de Módulos', 'Página de Cadastro de Módulos', '/admin/module/add_module.xhtml', 1,  @CD_PAGE_STATUS_ATIVO ),
-( @CD_MODULO_PAGINA, 'Cadastro de Páginas', 'Página de Cadastro de Páginas', '/admin/page/add_page.xhtml', 1,  @CD_PAGE_STATUS_ATIVO ),
-( @CD_MODULO_GRUPO_USUARIO, 'Cadastro de Grupos de Usuários', 'Página de Cadastro de Grupos de Usuários', '/admin/group/add_group.xhtml', 1,  @CD_PAGE_STATUS_ATIVO ),
-( @CD_MODULO_DIRETIVA, 'Cadastro de Diretivas', 'Página de Cadastro de Diretivas', '/admin/policy/add_policy.xhtml', 1,  @CD_PAGE_STATUS_ATIVO );
+INSERT INTO GU_PAGE ( CD_MODULE, NM_PAGE, DS_PAGE, DS_URL, FG_MAIN, FG_SHOW_MENU, STATUS ) VALUES 
+( @CD_MODULO_USUARIO, 'Cadastro de Usuários', 'Página de Cadastro de Usuários', '/admin/user/add_user.xhtml', 1, 1, @CD_PAGE_STATUS_ATIVO ),
+( @CD_MODULO_MODULO, 'Cadastro de Módulos', 'Página de Cadastro de Módulos', '/admin/module/add_module.xhtml', 1, 1, @CD_PAGE_STATUS_ATIVO ),
+( @CD_MODULO_PAGINA, 'Cadastro de Páginas', 'Página de Cadastro de Páginas', '/admin/page/add_page.xhtml', 1, 1, @CD_PAGE_STATUS_ATIVO ),
+( @CD_MODULO_GRUPO_USUARIO, 'Cadastro de Grupos de Usuários', 'Página de Cadastro de Grupos de Usuários', '/admin/group/add_group.xhtml', 1, 1, @CD_PAGE_STATUS_ATIVO ),
+( @CD_MODULO_DIRETIVA, 'Cadastro de Diretivas', 'Página de Cadastro de Diretivas', '/admin/policy/add_policy.xhtml', 1, 1, @CD_PAGE_STATUS_ATIVO );
 
 /*************************************************************************************************************************************************************************************************************/
 
