@@ -32,7 +32,7 @@ CREATE TABLE [dbo].[GU_GROUP] (
     CONSTRAINT [PK_GROUP] PRIMARY KEY ( [CD_GROUP] )
 );
 
-INSERT INTO [dbo].[GU_GROUP] ( [NM_GROUP], [DS_GROUP] ) VALUES ( 'Administradores', 'Grupo de Usuários Administradores do Sistema. (Acesso Total).' );
+INSERT INTO [dbo].[GU_GROUP] ( [NM_GROUP], [DS_GROUP] ) VALUES ( 'Administradores', 'Grupo de UsuÃ¡rios Administradores do Sistema. (Acesso Total).' );
 SELECT @CD_ADMIN_GROUP = @@IDENTITY
 
 /*************************************************************************************************************************************************************************************************************/
@@ -46,9 +46,9 @@ CREATE TABLE [dbo].[GU_USER_STATUS] (
     CONSTRAINT [PK_USER_STATUS] PRIMARY KEY ( [CD_STATUS] )
 );
 
-INSERT INTO [dbo].[GU_USER_STATUS] ( [NM_STATUS], [DS_STATUS] ) VALUES ( 'Ativo', 'Usuário Ativo' );
+INSERT INTO [dbo].[GU_USER_STATUS] ( [NM_STATUS], [DS_STATUS] ) VALUES ( 'Ativo', 'UsuÃ¡rio Ativo' );
 SELECT @CD_USER_STATUS_ATIVO = @@IDENTITY;
-INSERT INTO [dbo].[GU_USER_STATUS] ( [NM_STATUS], [DS_STATUS] ) VALUES ( 'Inativo', 'Usuário Inativo' );
+INSERT INTO [dbo].[GU_USER_STATUS] ( [NM_STATUS], [DS_STATUS] ) VALUES ( 'Inativo', 'UsuÃ¡rio Inativo' );
 
 /*************************************************************************************************************************************************************************************************************/
 
@@ -95,9 +95,9 @@ CREATE TABLE [dbo].[GU_MODULE_STATUS] (
     CONSTRAINT [PK_MODULE_STATUS] PRIMARY KEY ( [CD_STATUS] )
 );
 
-INSERT INTO [dbo].[GU_MODULE_STATUS] ( [NM_STATUS], [DS_STATUS] ) VALUES ( 'Ativo', 'Módulo Ativo' );
+INSERT INTO [dbo].[GU_MODULE_STATUS] ( [NM_STATUS], [DS_STATUS] ) VALUES ( 'Ativo', 'MÃ³dulo Ativo' );
 SELECT @CD_MODULE_STATUS_ATIVO = @@IDENTITY
-INSERT INTO [dbo].[GU_MODULE_STATUS] ( [NM_STATUS], [DS_STATUS] ) VALUES ( 'Inativo', 'Módulo Inativo' );
+INSERT INTO [dbo].[GU_MODULE_STATUS] ( [NM_STATUS], [DS_STATUS] ) VALUES ( 'Inativo', 'MÃ³dulo Inativo' );
 
 /*************************************************************************************************************************************************************************************************************/
 
@@ -115,17 +115,17 @@ CREATE TABLE [dbo].[GU_MODULE] (
 );
 
 -- MODULO DE GESTAO DE USUARIOS
-INSERT INTO [dbo].[GU_MODULE] ( [CD_PARENT], [NM_MODULE], [DS_MODULE], [STATUS] ) VALUES ( NULL, 'Gestão de Usuários', 'Agrupamento de Módulos que compõem o Módulo de Gestão de Usuários.', @CD_MODULE_STATUS_ATIVO );
+INSERT INTO [dbo].[GU_MODULE] ( [CD_PARENT], [NM_MODULE], [DS_MODULE], [STATUS] ) VALUES ( NULL, 'GestÃ£o de UsuÃ¡rios', 'Agrupamento de MÃ³dulos que compÃµem o MÃ³dulo de GestÃ£o de UsuÃ¡rios.', @CD_MODULE_STATUS_ATIVO );
 SELECT @CD_MODULE_PARENT = @@IDENTITY
-INSERT INTO [dbo].[GU_MODULE] ( [CD_PARENT], [NM_MODULE], [DS_MODULE], [STATUS] ) VALUES ( @CD_MODULE_PARENT, 'Usuários', 'Módulo para cadastro, edição e exclusão de Usuários.', @CD_MODULE_STATUS_ATIVO );
+INSERT INTO [dbo].[GU_MODULE] ( [CD_PARENT], [NM_MODULE], [DS_MODULE], [STATUS] ) VALUES ( @CD_MODULE_PARENT, 'UsuÃ¡rios', 'MÃ³dulo para cadastro, ediÃ§Ã£o e exclusÃ£o de UsuÃ¡rios.', @CD_MODULE_STATUS_ATIVO );
 SELECT @CD_MODULO_USUARIO = @@IDENTITY
-INSERT INTO [dbo].[GU_MODULE] ( [CD_PARENT], [NM_MODULE], [DS_MODULE], [STATUS] ) VALUES ( @CD_MODULE_PARENT, 'Módulos', 'Módulo para cadastro, edição e exclusão de Módulos.', @CD_MODULE_STATUS_ATIVO );
+INSERT INTO [dbo].[GU_MODULE] ( [CD_PARENT], [NM_MODULE], [DS_MODULE], [STATUS] ) VALUES ( @CD_MODULE_PARENT, 'MÃ³dulos', 'MÃ³dulo para cadastro, ediÃ§Ã£o e exclusÃ£o de MÃ³dulos.', @CD_MODULE_STATUS_ATIVO );
 SELECT @CD_MODULO_MODULO = @@IDENTITY
-INSERT INTO [dbo].[GU_MODULE] ( [CD_PARENT], [NM_MODULE], [DS_MODULE], [STATUS] ) VALUES ( @CD_MODULE_PARENT, 'Páginas', 'Módulo para cadastro, edição e exclusão de Páginas.', @CD_MODULE_STATUS_ATIVO );
+INSERT INTO [dbo].[GU_MODULE] ( [CD_PARENT], [NM_MODULE], [DS_MODULE], [STATUS] ) VALUES ( @CD_MODULE_PARENT, 'PÃ¡ginas', 'MÃ³dulo para cadastro, ediÃ§Ã£o e exclusÃ£o de PÃ¡ginas.', @CD_MODULE_STATUS_ATIVO );
 SELECT @CD_MODULO_PAGINA = @@IDENTITY
-INSERT INTO [dbo].[GU_MODULE] ( [CD_PARENT], [NM_MODULE], [DS_MODULE], [STATUS] ) VALUES ( @CD_MODULE_PARENT, 'Grupos de Usuários', 'Módulo para cadastro, edição e exclusão de Grupos de Usuários', @CD_MODULE_STATUS_ATIVO );
+INSERT INTO [dbo].[GU_MODULE] ( [CD_PARENT], [NM_MODULE], [DS_MODULE], [STATUS] ) VALUES ( @CD_MODULE_PARENT, 'Grupos de UsuÃ¡rios', 'MÃ³dulo para cadastro, ediÃ§Ã£o e exclusÃ£o de Grupos de UsuÃ¡rios', @CD_MODULE_STATUS_ATIVO );
 SELECT @CD_MODULO_GRUPO_USUARIO = @@IDENTITY
-INSERT INTO [dbo].[GU_MODULE] ( [CD_PARENT], [NM_MODULE], [DS_MODULE], [STATUS] ) VALUES ( @CD_MODULE_PARENT, 'Diretivas', 'Módulo para cadastro, edição e exclusão de Diretivas de Acesso.', @CD_MODULE_STATUS_ATIVO );
+INSERT INTO [dbo].[GU_MODULE] ( [CD_PARENT], [NM_MODULE], [DS_MODULE], [STATUS] ) VALUES ( @CD_MODULE_PARENT, 'Diretivas', 'MÃ³dulo para cadastro, ediÃ§Ã£o e exclusÃ£o de Diretivas de Acesso.', @CD_MODULE_STATUS_ATIVO );
 SELECT @CD_MODULO_DIRETIVA = @@IDENTITY
 
 /*************************************************************************************************************************************************************************************************************/
@@ -139,9 +139,9 @@ CREATE TABLE [dbo].[GU_PAGE_STATUS] (
     CONSTRAINT [PK_PAGE_STATUS] PRIMARY KEY ( [CD_STATUS] )
 );
 
-INSERT INTO [dbo].[GU_PAGE_STATUS] ( [NM_STATUS], [DS_STATUS] ) VALUES ( 'Ativa', 'Página Ativa' );
+INSERT INTO [dbo].[GU_PAGE_STATUS] ( [NM_STATUS], [DS_STATUS] ) VALUES ( 'Ativa', 'PÃ¡gina Ativa' );
 SELECT @CD_PAGE_STATUS_ATIVO = @@IDENTITY
-INSERT INTO [dbo].[GU_PAGE_STATUS] ( [NM_STATUS], [DS_STATUS] ) VALUES ( 'Inativa', 'Página Inativa' );
+INSERT INTO [dbo].[GU_PAGE_STATUS] ( [NM_STATUS], [DS_STATUS] ) VALUES ( 'Inativa', 'PÃ¡gina Inativa' );
 
 /*************************************************************************************************************************************************************************************************************/
 
@@ -153,6 +153,7 @@ CREATE TABLE [dbo].[GU_PAGE] (
     [DS_PAGE]   [VARCHAR]( 300 ),
     [DS_URL]    [VARCHAR]( 100 ) NOT NULL,
     [FG_MAIN]   [CHAR]( 1 ),
+    [FG_SHOW_MENU] [CHAR]( 1 ),
     [STATUS]    [NUMERIC]( 10, 0 ),
     [CREATED]   [DATETIME] NOT NULL DEFAULT GETDATE(),
     CONSTRAINT [PK_PAGE] PRIMARY KEY ( [CD_PAGE] ),
@@ -161,11 +162,11 @@ CREATE TABLE [dbo].[GU_PAGE] (
     CONSTRAINT [FK_PAGE_STATUS] FOREIGN KEY ( [STATUS] ) REFERENCES [dbo].[GU_PAGE_STATUS] ( [CD_STATUS] )
 );
 
-INSERT INTO [dbo].[GU_PAGE] ( [CD_MODULE], [NM_PAGE], [DS_PAGE], [DS_URL], [FG_MAIN], [STATUS] ) VALUES ( @CD_MODULO_USUARIO, 'Cadastro de Usuários', 'Página de Cadastro de Usuários', '/admin/user/add_user.xhtml', 1,  @CD_PAGE_STATUS_ATIVO );
-INSERT INTO [dbo].[GU_PAGE] ( [CD_MODULE], [NM_PAGE], [DS_PAGE], [DS_URL], [FG_MAIN], [STATUS] ) VALUES ( @CD_MODULO_MODULO, 'Cadastro de Módulos', 'Página de Cadastro de Módulos', '/admin/module/add_module.xhtml', 1,  @CD_PAGE_STATUS_ATIVO );
-INSERT INTO [dbo].[GU_PAGE] ( [CD_MODULE], [NM_PAGE], [DS_PAGE], [DS_URL], [FG_MAIN], [STATUS] ) VALUES ( @CD_MODULO_PAGINA, 'Cadastro de Páginas', 'Página de Cadastro de Páginas', '/admin/page/add_page.xhtml', 1,  @CD_PAGE_STATUS_ATIVO );
-INSERT INTO [dbo].[GU_PAGE] ( [CD_MODULE], [NM_PAGE], [DS_PAGE], [DS_URL], [FG_MAIN], [STATUS] ) VALUES ( @CD_MODULO_GRUPO_USUARIO, 'Cadastro de Grupos de Usuários', 'Página de Cadastro de Grupos de Usuários', '/admin/group/add_group.xhtml', 1,  @CD_PAGE_STATUS_ATIVO );
-INSERT INTO [dbo].[GU_PAGE] ( [CD_MODULE], [NM_PAGE], [DS_PAGE], [DS_URL], [FG_MAIN], [STATUS] ) VALUES ( @CD_MODULO_DIRETIVA, 'Cadastro de Diretivas', 'Página de Cadastro de Diretivas', '/admin/policy/add_policy.xhtml', 1,  @CD_PAGE_STATUS_ATIVO );
+INSERT INTO [dbo].[GU_PAGE] ( [CD_MODULE], [NM_PAGE], [DS_PAGE], [DS_URL], [FG_MAIN], [STATUS] ) VALUES ( @CD_MODULO_USUARIO, 'Cadastro de UsuÃ¡rios', 'PÃ¡gina de Cadastro de UsuÃ¡rios', '/admin/user/add_user.xhtml', 1, 1, @CD_PAGE_STATUS_ATIVO );
+INSERT INTO [dbo].[GU_PAGE] ( [CD_MODULE], [NM_PAGE], [DS_PAGE], [DS_URL], [FG_MAIN], [STATUS] ) VALUES ( @CD_MODULO_MODULO, 'Cadastro de MÃ³dulos', 'PÃ¡gina de Cadastro de MÃ³dulos', '/admin/module/add_module.xhtml', 1, 1, @CD_PAGE_STATUS_ATIVO );
+INSERT INTO [dbo].[GU_PAGE] ( [CD_MODULE], [NM_PAGE], [DS_PAGE], [DS_URL], [FG_MAIN], [STATUS] ) VALUES ( @CD_MODULO_PAGINA, 'Cadastro de PÃ¡ginas', 'PÃ¡gina de Cadastro de PÃ¡ginas', '/admin/page/add_page.xhtml', 1, 1, @CD_PAGE_STATUS_ATIVO );
+INSERT INTO [dbo].[GU_PAGE] ( [CD_MODULE], [NM_PAGE], [DS_PAGE], [DS_URL], [FG_MAIN], [STATUS] ) VALUES ( @CD_MODULO_GRUPO_USUARIO, 'Cadastro de Grupos de UsuÃ¡rios', 'PÃ¡gina de Cadastro de Grupos de UsuÃ¡rios', '/admin/group/add_group.xhtml', 1, 1, @CD_PAGE_STATUS_ATIVO );
+INSERT INTO [dbo].[GU_PAGE] ( [CD_MODULE], [NM_PAGE], [DS_PAGE], [DS_URL], [FG_MAIN], [STATUS] ) VALUES ( @CD_MODULO_DIRETIVA, 'Cadastro de Diretivas', 'PÃ¡gina de Cadastro de Diretivas', '/admin/policy/add_policy.xhtml', 1, 1, @CD_PAGE_STATUS_ATIVO );
 
 /*************************************************************************************************************************************************************************************************************/
 
@@ -197,46 +198,46 @@ CREATE TABLE [dbo].[GU_POLICY] (
     CONSTRAINT [UK_POLICY_FUNCTION] UNIQUE ( [NM_FUNCTION] )
 );
 
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Inserir Módulo', 'Inserir novos Módulos', 'insertModule' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Alterar Módulo', 'Alterar as informações de um Módulo Cadastrado', 'editModule' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Excluir Módulo', 'Excluir Módulos Cadastrados', 'deleteModule' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Listar Módulos', 'Listar Módulos Cadastrados', 'listModule' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Recuperar Módulo', 'Recuperar um Módulo específico', 'getModule' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Inserir Página', 'Inserir novas Páginas', 'insertPage' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Alterar Página', 'Alterar as informações de uma Página Cadastrada', 'editPage' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Excluir Página', 'Excluir Páginas Cadastradas', 'deletePage' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Listar Páginas', 'Listar Páginas Cadastradas', 'listPage' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Recuperar Página', 'Recuperar uma Página específica', 'getPage' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Inserir MÃ³dulo', 'Inserir novos MÃ³dulos', 'insertModule' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Alterar MÃ³dulo', 'Alterar as informaÃ§Ãµes de um MÃ³dulo Cadastrado', 'editModule' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Excluir MÃ³dulo', 'Excluir MÃ³dulos Cadastrados', 'deleteModule' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Listar MÃ³dulos', 'Listar MÃ³dulos Cadastrados', 'listModule' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Recuperar MÃ³dulo', 'Recuperar um MÃ³dulo especÃ­fico', 'getModule' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Inserir PÃ¡gina', 'Inserir novas PÃ¡ginas', 'insertPage' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Alterar PÃ¡gina', 'Alterar as informaÃ§Ãµes de uma PÃ¡gina Cadastrada', 'editPage' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Excluir PÃ¡gina', 'Excluir PÃ¡ginas Cadastradas', 'deletePage' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Listar PÃ¡ginas', 'Listar PÃ¡ginas Cadastradas', 'listPage' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Recuperar PÃ¡gina', 'Recuperar uma PÃ¡gina especÃ­fica', 'getPage' );
 INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Inserir Diretiva', 'Inserir novas Diretivas', 'insertPolicy' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Alterar Diretiva', 'Alterar as informações de uma Diretiva Cadastrada', 'editPolicy' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Alterar Diretiva', 'Alterar as informaÃ§Ãµes de uma Diretiva Cadastrada', 'editPolicy' );
 INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Excluir Diretiva', 'Excluir Diretivas Cadastradas', 'deletePolicy' );
 INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Listar Diretivas', 'Listar Diretivas Cadastradas', 'listPolicy' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Recuperar Diretiva', 'Recuperar uma Diretiva específica', 'getPolicy' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Recuperar Diretiva', 'Recuperar uma Diretiva especÃ­fica', 'getPolicy' );
 INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Inserir Grupo', 'Inserir novos Grupos', 'insertGroup' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Alterar Grupo', 'Alterar as informações de um Grupo Cadastrado', 'editGroup' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Alterar Grupo', 'Alterar as informaÃ§Ãµes de um Grupo Cadastrado', 'editGroup' );
 INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Excluir Grupo', 'Excluir Grupos Cadastrados', 'deleteGroup' );
 INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Listar Grupos', 'Listar Grupos Cadastrados', 'listGroup' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Recuperar Grupo', 'Recuperar um Grupo específico', 'getGroup' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Inserir Usuário', 'Inserir novos Usuários', 'insertUser' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Alterar Usuário', 'Alterar as informações de um Usuário Cadastrado', 'editUser' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Excluir Usuário', 'Excluir Usuários Cadastrados', 'deleteUser' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Listar Usuários', 'Listar Usuário Cadastrados', 'listUser' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Recuperar Usuário', 'Recuperar um Usuário específico', 'getUser' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Inserir Status de Página', 'Inserir novos Status de Página', 'insertPageStatus' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Alterar Status de Página', 'Alterar as informações de um Status de Página Cadastrado', 'editPageStatus' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Excluir Status de Página', 'Excluir Status de Página Cadastrado', 'deletePageStatus' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Listar Status de Página', 'Listar Status de Página Cadastrado', 'listPageStatus' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Recuperar Status de Página', 'Recuperar um Status de Página específico', 'getPageStatus' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Inserir Status de Módulo', 'Inserir novos Status de Módulo', 'insertModuleStatus' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Alterar Status de Módulo', 'Alterar as informações de um Status de Módulo Cadastrado', 'editModuleStatus' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Excluir Status de Módulo', 'Excluir Status de Módulo Cadastrado', 'deleteModuleStatus' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Listar Status de Módulo', 'Listar Status de Módulo Cadastrado', 'listModuleStatus' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Recuperar Status de Módulo', 'Recuperar um Status de Módulo específico', 'getModuleStatus' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Inserir Status do Usuário', 'Inserir novos Status de Usuário', 'insertUserStatus' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Alterar Status do Usuário', 'Alterar as informações de um Status de Usuário Cadastrado', 'editUserStatus' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Excluir Status do Usuário', 'Excluir Status de Usuários Cadastrados', 'deleteUserStatus' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Listar Status dos Usuários', 'Listar Status de Usuário Cadastrados', 'listUserStatus' );
-INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Recuperar Status do Usuário', 'Recuperar um Status de Usuário específico', 'getUserStatus' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Recuperar Grupo', 'Recuperar um Grupo especÃ­fico', 'getGroup' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Inserir UsuÃ¡rio', 'Inserir novos UsuÃ¡rios', 'insertUser' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Alterar UsuÃ¡rio', 'Alterar as informaÃ§Ãµes de um UsuÃ¡rio Cadastrado', 'editUser' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Excluir UsuÃ¡rio', 'Excluir UsuÃ¡rios Cadastrados', 'deleteUser' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Listar UsuÃ¡rios', 'Listar UsuÃ¡rio Cadastrados', 'listUser' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Recuperar UsuÃ¡rio', 'Recuperar um UsuÃ¡rio especÃ­fico', 'getUser' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Inserir Status de PÃ¡gina', 'Inserir novos Status de PÃ¡gina', 'insertPageStatus' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Alterar Status de PÃ¡gina', 'Alterar as informaÃ§Ãµes de um Status de PÃ¡gina Cadastrado', 'editPageStatus' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Excluir Status de PÃ¡gina', 'Excluir Status de PÃ¡gina Cadastrado', 'deletePageStatus' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Listar Status de PÃ¡gina', 'Listar Status de PÃ¡gina Cadastrado', 'listPageStatus' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Recuperar Status de PÃ¡gina', 'Recuperar um Status de PÃ¡gina especÃ­fico', 'getPageStatus' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Inserir Status de MÃ³dulo', 'Inserir novos Status de MÃ³dulo', 'insertModuleStatus' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Alterar Status de MÃ³dulo', 'Alterar as informaÃ§Ãµes de um Status de MÃ³dulo Cadastrado', 'editModuleStatus' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Excluir Status de MÃ³dulo', 'Excluir Status de MÃ³dulo Cadastrado', 'deleteModuleStatus' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Listar Status de MÃ³dulo', 'Listar Status de MÃ³dulo Cadastrado', 'listModuleStatus' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Recuperar Status de MÃ³dulo', 'Recuperar um Status de MÃ³dulo especÃ­fico', 'getModuleStatus' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Inserir Status do UsuÃ¡rio', 'Inserir novos Status de UsuÃ¡rio', 'insertUserStatus' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Alterar Status do UsuÃ¡rio', 'Alterar as informaÃ§Ãµes de um Status de UsuÃ¡rio Cadastrado', 'editUserStatus' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Excluir Status do UsuÃ¡rio', 'Excluir Status de UsuÃ¡rios Cadastrados', 'deleteUserStatus' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Listar Status dos UsuÃ¡rios', 'Listar Status de UsuÃ¡rio Cadastrados', 'listUserStatus' );
+INSERT INTO [dbo].[GU_POLICY] ( [NM_POLICY], [DS_POLICY], [NM_FUNCTION] ) VALUES ( 'Recuperar Status do UsuÃ¡rio', 'Recuperar um Status de UsuÃ¡rio especÃ­fico', 'getUserStatus' );
 
 
 /*************************************************************************************************************************************************************************************************************/
