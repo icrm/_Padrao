@@ -9,15 +9,15 @@
     <ui:define name="titulo">Cadastro de Móulos</ui:define>
 
     <ui:define name="content">
-        <h:form>
 
-            <h:messages globalOnly="true" errorClass="global-error" infoClass="global-success"/>
+        <p:tabView id="tabView">
+            <p:tab id="tab1" title="Módulos">
 
-            <p:tabView id="tabView">
-                <p:tab id="tab1" title="Módulos">
-
-                    <h:panelGrid columns="2" columnClasses="top-col,top-col">
-                        <p:panel>
+                <h:panelGrid columns="2" columnClasses="top-col,top-col">
+                    <p:panel id="panel1">
+                        <h:form>
+                            <h:messages globalOnly="true" errorClass="global-error" infoClass="global-success" />
+                            
                             <p class="form-row">
                             <h:outputLabel for="nmModule" value="Nome: " style="width: 70px;"/>
                             <h:inputText
@@ -56,12 +56,14 @@
                             <h:message for="status" styleClass="local-error" />
                             </p><br/>
 
-                            <p:commandButton action="#{moduleBean.inserir}" value="Salvar" update="panel" rendered="#{!moduleBean.editando}"/>
-                            <p:commandButton action="#{moduleBean.confirmarEdicao}" value="Salvar" update="panel" rendered="#{moduleBean.editando}"/>
-                            <p:commandButton action="#{moduleBean.cancelarEdicao}" value="Cancelar" update="panel" rendered="#{moduleBean.editando}" />
-                        </p:panel>
+                            <p:commandButton action="#{moduleBean.inserir}" value="Salvar" update="tabView" rendered="#{!moduleBean.editando}"/>
+                            <p:commandButton action="#{moduleBean.confirmarEdicao}" value="Salvar" update="tabView" rendered="#{moduleBean.editando}"/>
+                            <p:commandButton action="#{moduleBean.cancelarEdicao}" value="Cancelar" update="tabView" rendered="#{moduleBean.editando}" />
+                        </h:form>
+                    </p:panel>
 
-                        <p:panel>
+                    <p:panel id="panel2">
+                        <h:form>
                             <p:menubar>
                                 <p:menuitem value="Excluir" url="#" />
                                 <p:menuitem value="Ativar" url="#" />
@@ -80,7 +82,7 @@
 
                                 <p:column selectionMode="multiple"  />
                                 <p:column>
-                                    <p:commandLink action="#{moduleBean.editar}" update="panel" styleClass="action">
+                                    <p:commandLink action="#{moduleBean.editar}" update="tabView" styleClass="action">
                                         <h:graphicImage alt="Editar" title="Editar" url="/resources/images/file_edit.png" />
                                         <f:setPropertyActionListener target="#{moduleBean.module}" value="#{item}" />
                                     </p:commandLink>
@@ -101,17 +103,16 @@
                                     </h:outputText>
                                 </p:column>
                             </p:dataTable>
-                        </p:panel>
-                    </h:panelGrid>
+                        </h:form>
+                    </p:panel>
+                </h:panelGrid>
 
-                </p:tab>
-                
-                <p:tab id="tab2" title="Submódulos" disabled="#{!moduleBean.editando}">
-                    <p>Teste</p>
-                </p:tab>
-            </p:tabView>
+            </p:tab>
 
-        </h:form>
+            <p:tab id="tab2" title="Submódulos" disabled="#{!moduleBean.editando}">
+                <p>Teste</p>
+            </p:tab>
+        </p:tabView>
 
         <h:form>
             <p:confirmDialog message="Deseja realmente excluir este registro?" header="Confirmar exclusão do Registro" severity="alert" widgetVar="confirm">

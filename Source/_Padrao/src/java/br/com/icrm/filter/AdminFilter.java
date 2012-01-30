@@ -1,4 +1,4 @@
-    package br.com.icrm.filter;
+package br.com.icrm.filter;
 
 import br.com.icrm.persistence.entity.Page;
 import br.com.icrm.security.Session;
@@ -13,12 +13,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
+/**
+ * Filtro para a área administrativa.
+ *
+ * @since 0.1
+ * @version 0.1
+ * @see Filter
+ */
 public class AdminFilter implements Filter {
 
+    /**
+     * Configurações do Filtro.
+     */
     private FilterConfig filterConfig = null;
-    private final String SIGNON_PAGE_URI = "/admin/login.xhtml";
-    private final String ACCESS_DENIED_PAGE_URI = "/access_denied.xhtml";
+    /**
+     * Página de Login.
+     */
+    private final String SIGNON_PAGE = "/admin/login.xhtml";
+    /**
+     * Página de acesso negado.
+     */
+    private final String ACCESS_DENIED_PAGE = "/access_denied.xhtml";
+    /**
+     * Página inicial da aplicação.
+     */
     private final String INDEX_PAGE = "/admin/index.xhtml";
+    /**
+     * Objeto de Log.
+     */
     private static final Logger LOGGER;
 
     static {
@@ -32,28 +54,32 @@ public class AdminFilter implements Filter {
         LOGGER.debug("Iniciando execução do Filtro do módulo Administrativo.");
 
         LOGGER.debug("Definindo Objeto HttpServletRequest.");
-        HttpServletRequest req = (HttpServletRequest) request;
+        final HttpServletRequest req = (HttpServletRequest) request;
         LOGGER.debug("Definindo Objeto HttpServletResponse.");
-        HttpServletResponse resp = (HttpServletResponse) response;
+        final HttpServletResponse resp = (HttpServletResponse) response;
 
-        String url = req.getRequestURI().replace(req.getContextPath(), "");
+        final String url = cleanUrl(req.getRequestURI(), req.getContextPath());
 
         LOGGER.debug("Recuperando a Sessão.");
-        Session session = (Session) req.getSession().getAttribute("accmmSession");
+        Session session 
+                = (Session) req.getSession().getAttribute("accmmSession");
 
         if (session == null) {
             LOGGER.debug("Sessão está nula");
-            req.getSession().setAttribute("redirectTo", url);
-            request.getRequestDispatcher(SIGNON_PAGE_URI).forward(req, resp);
+            request.setAttribute("redirectTo", url);
+            request.getRequestDispatcher(SIGNON_PAGE).forward(req, resp);
             return;
         } else if (session.getLoggedUser() == null) {
             LOGGER.debug("A Sessão não está nula, mas o Usuário está.");
-            req.getSession().setAttribute("redirectTo", url);
-            request.getRequestDispatcher(SIGNON_PAGE_URI).forward(req, resp);
+            request.setAttribute("redirectTo", url);
+            request.getRequestDispatcher(SIGNON_PAGE).forward(req, resp);
             return;
-        } else if (session.getLoggedUser() != null && !checkPagePermission(session, url)) {
-            LOGGER.debug("A Sessão e o Usuário não estão nulos, mas o usuário não tem permissão para acessar a página informada");
-            request.getRequestDispatcher(ACCESS_DENIED_PAGE_URI).forward(req, resp);
+        } else if (session.getLoggedUser() != null
+                && !checkPagePermission(session, url)) {
+            LOGGER.debug("A Sessão e o Usuário não estão nulos, mas o "
+                    + "usuário não tem permissão para acessar a "
+                    + "página [" + url + "]");
+            request.getRequestDispatcher(ACCESS_DENIED_PAGE).forward(req, resp);
             return;
         }
 
@@ -90,8 +116,9 @@ public class AdminFilter implements Filter {
         filterConfig.getServletContext().log(msg);
     }
 
-    private boolean checkPagePermission(Session session, String url) {
-        if (url.equals(SIGNON_PAGE_URI)) {
+    private boolean checkPagePermission(final Session session
+            , final String url) {
+        if (url.equals(SIGNON_PAGE) || url.equals(INDEX_PAGE)) {
             return true;
         }
         boolean permission = false;
@@ -108,5 +135,12 @@ public class AdminFilter implements Filter {
             }
         }
         return permission;
+    }
+
+    private String cleanUrl(final String url, final String contextPath) {
+        final int index = (url.indexOf(";") > -1) ?
+                url.indexOf(";") : url.length();
+        final String clean = url.substring(0, index).replace(contextPath, "");
+        return clean;
     }
 }

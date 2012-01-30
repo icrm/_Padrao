@@ -140,7 +140,8 @@ public abstract class AbstractDAO<T> implements Serializable {
         final EntityManager entity = this.getEntityManager();
 
         LOGGER.debug("Criando Instância de CriteriaQuery.");
-        final CriteriaQuery criteria = entity.getCriteriaBuilder().createQuery();
+        final CriteriaQuery criteria
+                = entity.getCriteriaBuilder().createQuery();
 
         LOGGER.debug("Criando Instância de Root.");
         final Root<T> root = criteria.from(this.getDomainClass());
@@ -168,7 +169,8 @@ public abstract class AbstractDAO<T> implements Serializable {
         final EntityManager entity = this.getEntityManager();
 
         LOGGER.debug("Criando Instância de CriteriaQuery.");
-        final CriteriaQuery criteria = entity.getCriteriaBuilder().createQuery();
+        final CriteriaQuery criteria
+                = entity.getCriteriaBuilder().createQuery();
 
         LOGGER.info("Selecionando todos os Registros de "
                 + getDomainClass().getName() + ".");

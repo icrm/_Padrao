@@ -6,28 +6,30 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/resources/templates/default_admin.xhtml">
 
-    <ui:define name="titulo">Móulos</ui:define>
+    <ui:define name="titulo">Usuários</ui:define>
 
     <ui:define name="content">
         <p:panel id="panel" header="Usuários" style="width: 800px;">
             <h:form>
-                <h:messages globalOnly="true" styleClass="global-error" />
+                <h:messages globalOnly="true" errorClass="global-error" infoClass="global-success"/>
 
                 <fieldset>
                     <legend><h:outputText value="Usuário" /></legend>
 
                     <p class="form-row">
-                    <h:outputLabel for="nmUser" value="Nome: " />
+                    <h:outputLabel for="nmUser" value="* Nome: " />
                     <h:inputText
                         id="nmUser"
                         value="#{userBean.user.nmUser}"
                         required="true"
-                        requiredMessage="Informe o Nome do Usuário"/>
+                        requiredMessage="Informe o Nome do Usuário">
+                        <f:validator validatorId="specialChar" />
+                    </h:inputText>
                     <h:message for="nmUser" styleClass="local-error" />
                     </p>
 
                     <p class="form-row">
-                    <h:outputLabel for="dsEmail" value="E-mail: " />
+                    <h:outputLabel for="dsEmail" value="* E-mail: " />
                     <h:inputText
                         id="dsEmail"
                         value="#{userBean.user.dsEmail}"
@@ -40,18 +42,21 @@
                     </p>
 
                     <p class="form-row">
-                    <h:outputLabel for="dsPassword" value="Senha: " rendered="#{!userBean.editando}"/>
+                    <h:outputLabel for="dsPassword" value="* Senha: " rendered="#{!userBean.editando}"/>
                     <h:inputSecret
                         id="dsPassword"
                         value="#{userBean.user.dsPassword}"
                         rendered="#{!userBean.editando}"
                         required="true"
-                        requiredMessage="Informe a Senha do Usuário"/>
+                        requiredMessage="Informe a Senha do Usuário"
+                        validatorMessage="A Senha deve conter no mínimo 6 caracteres.">
+                        <f:validateLength minimum="6" />
+                    </h:inputSecret>
                     <h:message for="dsPassword" styleClass="local-error" />
                     </p>
 
                     <p class="form-row">
-                    <h:outputLabel for="group" value="Grupo: " />
+                    <h:outputLabel for="group" value="* Grupo: " />
                     <h:selectOneMenu id="group" value="#{userBean.user.group}" required="true" requiredMessage="Selecione um Grupo de Usuários.">
                         <f:selectItem itemLabel="Selecione ..." itemValue="" />
                         <f:selectItems value="#{groupBean.listItems}" />
@@ -61,7 +66,7 @@
                     </p>
 
                     <p class="form-row">
-                    <h:outputLabel for="status" value="Status: " />
+                    <h:outputLabel for="status" value="* Status: " />
                     <h:selectOneMenu id="status" value="#{userBean.user.status}" required="true" requiredMessage="Informe o Status deste Usuário">
                         <f:selectItem itemLabel="Selecione ..." itemValue="" />
                         <f:selectItems value="#{userStatusBean.listItems}" />
@@ -70,10 +75,12 @@
                     <h:message for="status" styleClass="local-error" />
                     </p>
                 </fieldset><br />
+                
+                <p><em>* Campos de preenchimento obrigatório.</em></p><br />
 
                 <p:commandButton action="#{userBean.inserir}" value="Salvar" update="panel" rendered="#{!userBean.editando}"/>
                 <p:commandButton action="#{userBean.confirmarEdicao}" value="Salvar" update="panel" rendered="#{userBean.editando}"/>
-                <p:commandButton action="#{userBean.cancelarEdicao}" value="Cancelar" update="panel" rendered="#{userBean.editando}"/>
+                <p:commandButton action="#{userBean.cancelarEdicao}" process="@this" value="Cancelar" update="panel" rendered="#{userBean.editando}"/>
                 <br /><br />
             </h:form>
 

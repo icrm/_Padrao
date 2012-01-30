@@ -47,9 +47,13 @@ public class ModuleStatusDAO extends AbstractDAO<ModuleStatus> {
      * @param name
      * @return 
      */
-    public ModuleStatus findByName(final String name) {
+    public ModuleStatus findByName(String name) {
         LOGGER.debug("Iniciando [FIND-BY-NAME] da Entidade "
                 + getDomainClass().getName() + ".");
+        if ("".equals(name.trim())) {
+            return null;
+        }
+        name = name.trim();
         LOGGER.debug("Criando Instância de CriteriaBuilder.");
         final CriteriaBuilder cbuilder
                 = getEntityManager().getCriteriaBuilder();

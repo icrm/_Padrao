@@ -23,7 +23,9 @@
                         <h:outputLabel for="password" value="Senha: " />
                         <h:inputSecret id="password" value="#{login.password}" required="true" requiredMessage="O Campo Senha deve ser preenchido!" /><br />
 
-                        <p:commandButton value="Entrar" action="#{login.login}" update="msgs" ajax="false"/>
+                        <p:commandButton value="Entrar" action="#{login.login}" update="msgs" ajax="false">
+                            <f:setPropertyActionListener target="#{login.redirectTo}" value="#{requestScope.redirectTo}" />
+                        </p:commandButton>
                     </fieldset>
                     <h:messages id="msgs" styleClass="global-error" />
                 </div>
