@@ -98,7 +98,7 @@ public class Page implements Serializable {
      */
     @Column(name = "CREATED", insertable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
+    private Date created = new Date();
     /**
      * Variável que representa o relacionamento de muitos para muitos com a
      * tabela GU_GROUP.

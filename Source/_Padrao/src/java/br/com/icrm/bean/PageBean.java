@@ -164,6 +164,7 @@ public class PageBean implements Serializable {
             logger.error("Problema ao excluir uma Página", ex);
         }
         page = new Page();
+        this.editando = false;
         init();
     }
 

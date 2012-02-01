@@ -179,6 +179,7 @@ public class ModuleBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
         module = new Module();
+        this.editando = false;
         init();
     }
 

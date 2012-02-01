@@ -21,13 +21,11 @@ import org.apache.log4j.Logger;
 @ManagedBean(name = "pageStatusBean")
 public class PageStatusBean implements Serializable {
 
-    //<editor-fold desc="ATTRIBUTES">
     private static final long serialVersionUID = -1;
     private static final Logger logger;
     private PageStatusService service = new PageStatusService();
     private PageStatus pageStatus = new PageStatus();
     private List<PageStatus> pagesStatus = new ArrayList<PageStatus>();
-    //</editor-fold>
 
     static {
         logger = Logger.getLogger(PageStatusBean.class);
@@ -52,7 +50,6 @@ public class PageStatusBean implements Serializable {
         }
     }
 
-    //<editor-fold desc="GETTERS AND SETTER">
     public PageStatus getPageStatus() {
         return pageStatus;
     }
@@ -76,7 +73,6 @@ public class PageStatusBean implements Serializable {
         }
         return listItems;
     }
-    //</editor-fold>
 
     public PageStatusConverter getConverter() {
         return new PageStatusConverter(service);

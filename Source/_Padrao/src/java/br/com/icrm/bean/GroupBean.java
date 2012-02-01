@@ -27,7 +27,6 @@ import org.primefaces.model.TreeNode;
 @ViewScoped
 public class GroupBean implements Serializable {
 
-    //<editor-fold defaultstate="collapsed" desc="ATTRIBUTES">
     private static final long serialVersionUID = -1L;
     private static final Logger logger;
     private GroupService service = new GroupService();
@@ -36,7 +35,6 @@ public class GroupBean implements Serializable {
     private List<Group> groups = new ArrayList<Group>();
     private List<Policy> policies = new ArrayList<Policy>();
     private boolean editando = false;
-    //</editor-fold>
 
     static {
         logger = Logger.getLogger(GroupBean.class);
@@ -63,7 +61,6 @@ public class GroupBean implements Serializable {
         }
     }
 
-    //<editor-fold defaultstate="collapsed" desc="GETTERS AND SETTERS">
     public Group getGroup() {
         return group;
     }
@@ -95,7 +92,6 @@ public class GroupBean implements Serializable {
         }
         return listItems;
     }
-    //</editor-fold>
 
     public GroupConverter getConverter() {
         return new GroupConverter(service);
@@ -193,6 +189,7 @@ public class GroupBean implements Serializable {
             logger.error("Problema ao excluir um Grupo", ex);
         }
         group = new Group();
+        this.editando = false;
         init();
     }
 

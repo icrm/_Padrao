@@ -81,7 +81,7 @@ public class User implements Serializable {
      */
     @Column(name = "CREATED", insertable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
+    private Date created = new Date();
     /**
      * Variável que representa o relacionamento de muitos para um com a
      * tabela GU_GROUP.
@@ -148,7 +148,7 @@ public class User implements Serializable {
      * @param dsEmail - E-mail do usuário.
      */
     public void setDsEmail(String dsEmail) {
-        this.dsEmail = dsEmail;
+        this.dsEmail = dsEmail.toLowerCase();
     }
 
     /**

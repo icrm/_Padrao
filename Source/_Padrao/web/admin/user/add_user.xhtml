@@ -78,9 +78,9 @@
                 
                 <p><em>* Campos de preenchimento obrigatório.</em></p><br />
 
-                <p:commandButton action="#{userBean.inserir}" value="Salvar" update="panel" rendered="#{!userBean.editando}"/>
-                <p:commandButton action="#{userBean.confirmarEdicao}" value="Salvar" update="panel" rendered="#{userBean.editando}"/>
-                <p:commandButton action="#{userBean.cancelarEdicao}" process="@this" value="Cancelar" update="panel" rendered="#{userBean.editando}"/>
+                <p:commandButton action="#{userBean.inserir}" value="Salvar" update="panel" rendered="#{!userBean.editando}" onerror="$.fn.iit.ajaxError(xhr, status, error, '#{facesContext.externalContext.requestContextPath}#{initParam['iit.VIEW_EXPIRED_PAGE']}')"/>
+                <p:commandButton action="#{userBean.confirmarEdicao}" value="Salvar" update="panel" rendered="#{userBean.editando}" onerror="$.fn.iit.ajaxError(xhr, status, error, '#{facesContext.externalContext.requestContextPath}#{initParam['iit.VIEW_EXPIRED_PAGE']}')"/>
+                <p:commandButton action="#{userBean.cancelarEdicao}" process="@this" value="Cancelar" update="panel" rendered="#{userBean.editando}" onerror="$.fn.iit.ajaxError(xhr, status, error, '#{facesContext.externalContext.requestContextPath}#{initParam['iit.VIEW_EXPIRED_PAGE']}')"/>
                 <br /><br />
             </h:form>
 
@@ -122,8 +122,6 @@
                 </p:dataTable>
             </h:form>
         </p:panel>
-
-
 
         <h:form>
             <p:confirmDialog message="Deseja realmente excluir este registro?" header="Confirmar exclusão do Registro" severity="alert" widgetVar="confirm">

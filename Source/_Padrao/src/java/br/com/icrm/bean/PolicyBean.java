@@ -136,6 +136,7 @@ public class PolicyBean implements Serializable {
             logger.error("Problema ao excluir uma Diretiva.", ex);
         }
         policy = new Policy();
+        this.editando = false;
         init();
     }
 

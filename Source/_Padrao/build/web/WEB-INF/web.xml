@@ -8,12 +8,15 @@
         <param-name>primefaces.THEME</param-name>
         <param-value>none</param-value>
     </context-param>
+    <context-param>
+        <param-name>iit.VIEW_EXPIRED_PAGE</param-name>
+        <param-value>/sessao_expirada.xhtml</param-value>
+    </context-param>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
     <filter>
         <filter-name>AdminFilter</filter-name>
         <filter-class>br.com.icrm.filter.AdminFilter</filter-class>
@@ -25,25 +28,20 @@
         <dispatcher>INCLUDE</dispatcher>
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
-    
     <filter>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
-    </filter>	
+    </filter>
     <filter-mapping>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <servlet-name>Faces Servlet</servlet-name>
     </filter-mapping>
-
-
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>

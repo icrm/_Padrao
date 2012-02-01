@@ -133,6 +133,7 @@ public class UserBean implements Serializable {
             logger.error("Problema ao excluir um Usuário.", ex);
         }
         user = new User();
+        this.editando = false;
         init();
     }
 

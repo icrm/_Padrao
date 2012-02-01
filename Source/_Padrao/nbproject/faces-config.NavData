@@ -5,8 +5,8 @@
         <Node id="admin/policy/add_policy.xhtml" x="400" y="300" zoom="true"/>
         <Node id="admin/user/add_user.xhtml" x="150" y="150" zoom="true"/>
         <Node id="admin/index.xhtml" x="1150" y="150" zoom="true"/>
-        <Node id="access_denied.xhtml" x="150" y="300" zoom="true"/>
         <Node id="index.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="access_denied.xhtml" x="150" y="300" zoom="true"/>
         <Node id="resources/templates/default_admin.xhtml" x="650" y="300" zoom="true"/>
         <Node id="resources/templates/kies.xhtml" x="400" y="150" zoom="true"/>
         <Node id="admin/login.xhtml" x="650" y="150" zoom="true"/>
