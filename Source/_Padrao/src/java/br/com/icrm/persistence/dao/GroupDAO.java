@@ -29,14 +29,6 @@ public class GroupDAO extends AbstractDAO<Group> {
     }
 
     @Override
-    protected EntityManager getEntityManager() {
-        LOGGER.debug("Recuperando EntityManager.");
-        final EntityManagerFactory emf
-                = Persistence.createEntityManagerFactory("PUPadrao");
-        return emf.createEntityManager();
-    }
-
-    @Override
     protected Class<Group> getDomainClass() {
         return Group.class;
     }

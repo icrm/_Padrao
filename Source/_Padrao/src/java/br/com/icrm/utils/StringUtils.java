@@ -1,9 +1,9 @@
 package br.com.icrm.utils;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 
-@ViewScoped
+@RequestScoped
 @ManagedBean(name = "stringUtils")
 public class StringUtils {
 

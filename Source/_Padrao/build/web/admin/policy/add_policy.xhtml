@@ -6,38 +6,51 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/resources/templates/default_admin.xhtml">
 
-    <ui:define name="titulo">Cadastro de Diretivas</ui:define>
+    <ui:define name="titulo">Diretivas</ui:define>
 
     <ui:define name="content">
         <p:panel id="panel" header="Diretivas" style="width: 800px;">
             <h:form>
-
-                <h:messages />
+                <h:messages globalOnly="true" errorClass="global-error" infoClass="global-success"/>
 
                 <fieldset>
-
-                    <legend>Diretiva</legend>
+                    <legend><h:outputText value="Diretiva" /></legend>
 
                     <p class="form-row">
-                    <h:outputLabel for="nmPolicy" value="Nome: " />
-                    <h:inputText id="nmPolicy" value="#{policyBean.policy.nmPolicy}" styleClass="size5"/>
+                    <h:outputLabel for="nmPolicy" value="* Nome: " />
+                    <h:inputText
+                        id="nmPolicy"
+                        value="#{policyBean.policy.nmPolicy}"
+                        styleClass="size4"
+                        required="true"
+                        requiredMessage="Informe o Nome da Diretiva.">
+                        <f:validator validatorId="specialChar" />
+                    </h:inputText>
+                    <h:message for="nmPolicy" styleClass="local-error" />
                     </p>
 
                     <p class="form-row">
                     <h:outputLabel for="dsPolicy" value="Descrição: " />
-                    <h:inputTextarea id="dsPolicy" value="#{policyBean.policy.dsPolicy}" styleClass="size5"/>
+                    <h:inputTextarea id="dsPolicy" value="#{policyBean.policy.dsPolicy}" styleClass="size4"/>
                     </p>
 
                     <p class="form-row">
-                    <h:outputLabel for="nmFunction" value="Nome da Função Associada: "/>
-                    <h:inputText id="nmFunction" value="#{policyBean.policy.nmFunction}" styleClass="size5"/>
+                    <h:outputLabel for="nmFunction" value="* Função Associada: "/>
+                    <h:inputText
+                        id="nmFunction"
+                        value="#{policyBean.policy.nmFunction}"
+                        styleClass="size4"
+                        required="true"
+                        requiredMessage="Informe o Nome da Função que será associada a esta Diretiva.">
+                        <f:validator validatorId="specialChar" />
+                    </h:inputText>
+                    <h:message for="nmFunction" styleClass="local-error" />
                     </p>
-
                 </fieldset><br />
 
                 <p:commandButton action="#{policyBean.inserir}" value="Salvar" update="panel" rendered="#{!policyBean.editando}"/>
                 <p:commandButton action="#{policyBean.confirmarEdicao}" value="Salvar" update="panel" rendered="#{policyBean.editando}"/>
-                <p:commandButton action="#{policyBean.cancelarEdicao}" value="Cancelar" update="panel" rendered="#{policyBean.editando}"/>
+                <p:commandButton action="#{policyBean.cancelarEdicao}" process="@this" value="Cancelar" update="panel" rendered="#{policyBean.editando}"/>
                 <br /><br />
             </h:form>
 

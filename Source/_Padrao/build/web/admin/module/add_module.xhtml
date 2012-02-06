@@ -4,115 +4,115 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="/resources/templates/kies.xhtml">
+                template="/resources/templates/default_admin.xhtml">
 
-    <ui:define name="titulo">Cadastro de Móulos</ui:define>
+    <ui:define name="titulo">Móulos</ui:define>
+    <ui:define name="scripts">
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/admin/admin-module.js"></script>
+    </ui:define>
 
     <ui:define name="content">
+        <p:panel id="panel" header="Módulos" style="width: 800px;">
+            <h:form>
+                <h:messages globalOnly="true" errorClass="global-error" infoClass="global-success" />
 
-        <p:tabView id="tabView">
-            <p:tab id="tab1" title="Módulos">
+                <fieldset>
+                    <legend><h:outputText value="Módulo" /></legend>
 
-                <h:panelGrid columns="2" columnClasses="top-col,top-col">
-                    <p:panel id="panel1">
-                        <h:form>
-                            <h:messages globalOnly="true" errorClass="global-error" infoClass="global-success" />
-                            
-                            <p class="form-row">
-                            <h:outputLabel for="nmModule" value="Nome: " style="width: 70px;"/>
-                            <h:inputText
-                                id="nmModule"
-                                value="#{moduleBean.module.nmModule}"
-                                styleClass="size4"
-                                required="true"
-                                requiredMessage="Informe o Nome do Módulo"/>
-                            <h:message for="nmModule"  styleClass="local-error" />
-                            </p>
+                    <p class="form-row">
+                    <h:outputLabel for="nmModule" value="* Nome: " style="width: 70px;"/>
+                    <h:inputText
+                        id="nmModule"
+                        value="#{moduleBean.module.nmModule}"
+                        styleClass="size4"
+                        required="true"
+                        requiredMessage="Informe o Nome do Módulo">
+                        <f:validator validatorId="specialChar" />
+                    </h:inputText>
+                    <h:message for="nmModule"  styleClass="local-error" />
+                    </p>
 
-                            <p class="form-row">
-                            <h:outputLabel for="dsModule" value="Descrição: " style="width: 70px;"/>
-                            <h:inputTextarea
-                                id="dsModule"
-                                value="#{moduleBean.module.dsModule}"
-                                styleClass="size4"/>
-                            </p>
+                    <p class="form-row">
+                    <h:outputLabel for="dsModule" value="Descrição: " style="width: 70px;"/>
+                    <h:inputTextarea
+                        id="dsModule"
+                        value="#{moduleBean.module.dsModule}"
+                        styleClass="size4"/>
+                    </p>
 
-                            <p class="form-row">
-                            <h:outputLabel for="parent" value="Pai: " style="width: 70px;"/>
-                            <h:selectOneMenu id="parent" value="#{moduleBean.module.parent}" styleClass="size4">
-                                <f:selectItem itemLabel="Selecione ..." itemValue="" />
-                                <f:selectItems value="#{moduleBean.listItems}" />
-                                <f:converter binding="#{moduleBean.converter}" />
-                            </h:selectOneMenu>
-                            </p>
+                    <p class="form-row">
+                    <h:outputLabel for="parent" value="Pai: " style="width: 70px;"/>
+                    <h:selectOneMenu id="parent" value="#{moduleBean.module.parent}" styleClass="size4" valueChangeListener="#{moduleStatusBean.removeActive}" >
+                        <f:selectItem itemLabel="Selecione ..." itemValue="" />
+                        <f:selectItems value="#{moduleBean.listItems}" />
+                        <f:converter binding="#{moduleBean.converter}" />
+                        <f:ajax render="status" />
+                    </h:selectOneMenu>
+                    </p>
 
-                            <p class="form-row">
-                            <h:outputLabel for="status" value="Status: " style="width: 70px;"/>
-                            <h:selectOneMenu id="status" value="#{moduleBean.module.status}" required="true" requiredMessage="Informe o Status deste Módulo" styleClass="size4">
-                                <f:selectItem itemLabel="Selecione ..." itemValue="" />
-                                <f:selectItems value="#{moduleStatusBean.listItems}" />
-                                <f:converter binding="#{moduleStatusBean.converter}" />
-                            </h:selectOneMenu>
-                            <h:message for="status" styleClass="local-error" />
-                            </p><br/>
+                    <p class="form-row">
+                    <h:outputLabel for="status" value="* Status: " style="width: 70px;"/>
+                    <h:selectOneMenu id="status" value="#{moduleBean.module.status}" required="true" requiredMessage="Informe o Status deste Módulo" styleClass="size4" >
+                        <f:selectItems value="#{moduleStatusBean.listItems}" />
+                        <f:converter binding="#{moduleStatusBean.converter}" />
+                    </h:selectOneMenu>
+                    <h:message for="status" styleClass="local-error" />
+                    </p>
+                </fieldset><br />
 
-                            <p:commandButton action="#{moduleBean.inserir}" value="Salvar" update="tabView" rendered="#{!moduleBean.editando}"/>
-                            <p:commandButton action="#{moduleBean.confirmarEdicao}" value="Salvar" update="tabView" rendered="#{moduleBean.editando}"/>
-                            <p:commandButton action="#{moduleBean.cancelarEdicao}" value="Cancelar" update="tabView" rendered="#{moduleBean.editando}" />
-                        </h:form>
-                    </p:panel>
+                <p><em>* Campos de preenchimento obrigatório.</em></p><br />
 
-                    <p:panel id="panel2">
-                        <h:form>
-                            <p:menubar>
-                                <p:menuitem value="Excluir" url="#" />
-                                <p:menuitem value="Ativar" url="#" />
-                                <p:menuitem value="Inativar" url="#" />
-                            </p:menubar><br />
+                <p:commandButton action="#{moduleBean.inserir}" value="Salvar" update="panel" rendered="#{!moduleBean.editando}"/>
+                <p:commandButton action="#{moduleBean.confirmarEdicao}" value="Salvar" update="panel" rendered="#{moduleBean.editando}"/>
+                <p:commandButton action="#{moduleBean.cancelarEdicao}" process="@this" value="Cancelar" update="panel" rendered="#{moduleBean.editando}" />
+                <br /><br />
+            </h:form>
 
-                            <p:dataTable 
-                                value="#{moduleBean.dataModel}"
-                                id="list"
-                                var="item"
-                                paginator="true"
-                                rows="6"
-                                paginatorPosition="bottom"
-                                style="width: 100%;"
-                                selection="#{moduleBean.selectedModules}">
+            <h:form>
+                <p:dataTable 
+                    value="#{moduleBean.modules}"
+                    id="list"
+                    var="item"
+                    paginator="true"
+                    rows="10"
+                    paginatorPosition="bottom"
+                    style="width: 100%;">
 
-                                <p:column selectionMode="multiple"  />
-                                <p:column>
-                                    <p:commandLink action="#{moduleBean.editar}" update="tabView" styleClass="action">
-                                        <h:graphicImage alt="Editar" title="Editar" url="/resources/images/file_edit.png" />
-                                        <f:setPropertyActionListener target="#{moduleBean.module}" value="#{item}" />
-                                    </p:commandLink>
-                                </p:column>
+                    <p:column headerText="Ações">
+                        <p:commandLink action="#{moduleBean.editar}" update="panel" styleClass="action">
+                            <h:graphicImage alt="Editar" title="Editar" url="/resources/images/file_edit.png" />
+                            <f:setPropertyActionListener target="#{moduleBean.module}" value="#{item}" />
+                        </p:commandLink>
+                        <p:commandLink process="@this" oncomplete="confirm.show()">
+                            <h:outputText value="Excluir" />
+                            <f:setPropertyActionListener target="#{moduleBean.module}" value="#{item}" />
+                        </p:commandLink>
+                    </p:column>
 
-                                <p:column sortBy="#{item.nmModule}">
-                                    <strong><h:outputText value="#{item.nmModule}" /></strong><br />
-                                    <h:outputText value="#{stringUtils.strip(item.dsModule, 40)}" />
-                                </p:column>
+                    <p:column sortBy="#{item.nmModule}" headerText="Nome">
+                        <h:outputText value="#{item.nmModule}" />
+                    </p:column>
 
-                                <p:column sortBy="#{item.status.nmStatus}">
-                                    <h:outputText value="#{item.status.nmStatus}" />
-                                </p:column>
+                    <p:column sortBy="#{item.dsModule}" headerText="Descrição">
+                        <h:outputText value="#{stringUtils.strip(item.dsModule, 40)}" />
+                    </p:column>
+                    
+                    <p:column sortBy="#{item.parent.nmModule}" headerText="Pai">
+                        <h:outputText value="#{item.parent.nmModule}" />
+                    </p:column>
 
-                                <p:column sortBy="#{item.created}">
-                                    <h:outputText value="#{item.created}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
-                                    </h:outputText>
-                                </p:column>
-                            </p:dataTable>
-                        </h:form>
-                    </p:panel>
-                </h:panelGrid>
+                    <p:column sortBy="#{item.status.nmStatus}" headerText="Status">
+                        <h:outputText value="#{item.status.nmStatus}" />
+                    </p:column>
 
-            </p:tab>
-
-            <p:tab id="tab2" title="Submódulos" disabled="#{!moduleBean.editando}">
-                <p>Teste</p>
-            </p:tab>
-        </p:tabView>
+                    <p:column sortBy="#{item.created}" headerText="Data de Inclusão">
+                        <h:outputText value="#{item.created}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:panel>
 
         <h:form>
             <p:confirmDialog message="Deseja realmente excluir este registro?" header="Confirmar exclusão do Registro" severity="alert" widgetVar="confirm">

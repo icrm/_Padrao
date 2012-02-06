@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.RollbackException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -18,7 +20,7 @@ import org.apache.log4j.Logger;
  * @since 0.1
  * @version 0.1
  * @see Serializable
- * @param <T> - tipo do Objeto que será implementado pela classe
+ * @param <T> tipo do Objeto que será implementado pela classe
  */
 public abstract class AbstractDAO<T> implements Serializable {
 
@@ -42,7 +44,12 @@ public abstract class AbstractDAO<T> implements Serializable {
      * @return EntityManager
      * @see EntityManager
      */
-    protected abstract EntityManager getEntityManager();
+    protected EntityManager getEntityManager() {
+        LOGGER.debug("Recuperando EntityManager.");
+        final EntityManagerFactory emf
+                = Persistence.createEntityManagerFactory("PUPadrao");
+        return emf.createEntityManager();
+    }
 
     /**
      * Retorna a Classe de Dominio que será utilizada para "tipar"
@@ -55,7 +62,7 @@ public abstract class AbstractDAO<T> implements Serializable {
     /**
      * Método para inserir um Objeto.
      *
-     * @param tipo - Objeto a ser inserido.
+     * @param tipo Objeto a ser inserido.
      * @return <T>
      */
     public final T insert(final T tipo) {
@@ -86,7 +93,7 @@ public abstract class AbstractDAO<T> implements Serializable {
     /**
      * Método para atualizar um Objeto.
      *
-     * @param tipo - Objeto a ser atualizado.
+     * @param tipo Objeto a ser atualizado.
      * @return <T>
      */
     public final T update(final T tipo) {
@@ -110,7 +117,7 @@ public abstract class AbstractDAO<T> implements Serializable {
     /**
      * Método para excluir uma Objeto.
      *
-     * @param tipo - Objeto a ser excluído.
+     * @param tipo Objeto a ser excluído.
      */
     public final void delete(final T tipo) {
         LOGGER.debug("Iniciando [DELETE] da Entidade "
@@ -132,7 +139,7 @@ public abstract class AbstractDAO<T> implements Serializable {
     /**
      * Método que retorna a quantidade total de Objetos persistidos.
      *
-     * @return int - Total de Objetos persistidos.
+     * @return int Total de Objetos persistidos.
      */
     public final long count() {
         LOGGER.debug("Iniciando [COUNT] da Entidade "
@@ -140,8 +147,7 @@ public abstract class AbstractDAO<T> implements Serializable {
         final EntityManager entity = this.getEntityManager();
 
         LOGGER.debug("Criando Instância de CriteriaQuery.");
-        final CriteriaQuery criteria
-                = entity.getCriteriaBuilder().createQuery();
+        final CriteriaQuery criteria = entity.getCriteriaBuilder().createQuery();
 
         LOGGER.debug("Criando Instância de Root.");
         final Root<T> root = criteria.from(this.getDomainClass());
@@ -161,7 +167,7 @@ public abstract class AbstractDAO<T> implements Serializable {
     /**
      * Método que retorna todos Objetos já persistidos.
      *
-     * @return List<T> - Lista com todos os Objetos já persistidos.
+     * @return List<T> Lista com todos os Objetos já persistidos.
      */
     public final List<T> findAll() {
         LOGGER.debug("Iniciando [FIND-ALL] da Entidade "
@@ -169,8 +175,7 @@ public abstract class AbstractDAO<T> implements Serializable {
         final EntityManager entity = this.getEntityManager();
 
         LOGGER.debug("Criando Instância de CriteriaQuery.");
-        final CriteriaQuery criteria
-                = entity.getCriteriaBuilder().createQuery();
+        final CriteriaQuery criteria = entity.getCriteriaBuilder().createQuery();
 
         LOGGER.info("Selecionando todos os Registros de "
                 + getDomainClass().getName() + ".");
@@ -184,7 +189,7 @@ public abstract class AbstractDAO<T> implements Serializable {
     /**
      * Método que recupera um Objeto apartir de seu identificador.
      *
-     * @param identifier - identificador do Objeto.
+     * @param identifier identificador do Objeto.
      * @return <T>
      */
     public final T findById(final Object identifier) {

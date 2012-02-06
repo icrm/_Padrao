@@ -133,6 +133,8 @@ public class PageBean implements Serializable {
     }
 
     public void editar() {
+        this.fgMain = (this.page.getFgMain()==1) ? true : false;
+        this.fgShowMenu = (this.page.getFgShowMenu()==1) ? false : true;
         this.editando = true;
     }
 
@@ -171,6 +173,8 @@ public class PageBean implements Serializable {
     public void cancelarEdicao() {
         this.page = new Page();
         this.editando = false;
+        this.fgMain = false;
+        this.fgShowMenu = false;
         init();
     }
 

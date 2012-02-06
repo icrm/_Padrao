@@ -3,6 +3,7 @@ package br.com.icrm.bean;
 import br.com.icrm.base.exception.ICRMException;
 import br.com.icrm.converter.ModuleStatusConverter;
 import br.com.icrm.exception.PermissionException;
+import br.com.icrm.persistence.entity.Module;
 import br.com.icrm.persistence.entity.ModuleStatus;
 import br.com.icrm.security.Session;
 import br.com.icrm.service.ModuleStatusService;
@@ -12,12 +13,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import org.apache.log4j.Logger;
 
-@RequestScoped
+@ViewScoped
 @ManagedBean(name = "moduleStatusBean")
 public class ModuleStatusBean implements Serializable {
 
@@ -29,9 +31,6 @@ public class ModuleStatusBean implements Serializable {
 
     static {
         logger = Logger.getLogger(ModuleStatusBean.class);
-    }
-
-    public ModuleStatusBean() {
     }
 
     @PostConstruct
@@ -66,8 +65,24 @@ public class ModuleStatusBean implements Serializable {
         this.modulesStatus = modulesStatus;
     }
 
+    public void removeActive(ValueChangeEvent event) {
+        Module module = (Module) event.getNewValue();
+        if (module.getStatus().getNmStatus().equals("Inativo")) {
+            try {
+                this.getModulesStatus().remove(service.findByName("Ativo"));
+            } catch (PermissionException ex) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Você não tem permissão para visualizar as informações de Status dos Módulos."));
+                logger.error(ex);
+            } catch (ICRMException ex) {
+                logger.error("Problema ao executar removeActive", ex);
+            }
+        } else {
+            init();
+        }
+    }
+
     public List<SelectItem> getListItems() {
-        List<SelectItem> listItems = new ArrayList<SelectItem>();
+        final List<SelectItem> listItems = new ArrayList<SelectItem>();
         for (ModuleStatus ms : getModulesStatus()) {
             listItems.add(new SelectItem(ms, ms.getNmStatus()));
         }

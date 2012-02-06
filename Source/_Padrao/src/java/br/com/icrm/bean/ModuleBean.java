@@ -3,6 +3,7 @@ package br.com.icrm.bean;
 import br.com.icrm.base.exception.ICRMException;
 import br.com.icrm.converter.ModuleConverter;
 import br.com.icrm.datamodel.ModuleDataModel;
+import br.com.icrm.exception.ChildException;
 import br.com.icrm.exception.PermissionException;
 import br.com.icrm.persistence.entity.Module;
 import br.com.icrm.security.Session;
@@ -143,6 +144,7 @@ public class ModuleBean implements Serializable {
 
     public void editar() {
         this.editando = true;
+        this.getModules().remove(this.module);
     }
 
     public void confirmarEdicao() {
@@ -168,6 +170,11 @@ public class ModuleBean implements Serializable {
         } catch (PermissionException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Você não tem permissão para Excluir um Módulo."));
             logger.error(ex);
+            success = false;
+        } catch (ChildException ex) {
+            FacesMessage msg = new FacesMessage(ex.getMessage());
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
             success = false;
         } catch (ICRMException ex) {
             logger.error("Problema ao excluir um Módulo", ex);

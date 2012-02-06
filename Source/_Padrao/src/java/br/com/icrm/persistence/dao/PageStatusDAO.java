@@ -29,14 +29,6 @@ public class PageStatusDAO extends AbstractDAO<PageStatus> {
     }
 
     @Override
-    protected EntityManager getEntityManager() {
-        LOGGER.debug("Recuperando EntityManager.");
-        final EntityManagerFactory emf
-                = Persistence.createEntityManagerFactory("PUPadrao");
-        return emf.createEntityManager();
-    }
-
-    @Override
     protected Class<PageStatus> getDomainClass() {
         return PageStatus.class;
     }

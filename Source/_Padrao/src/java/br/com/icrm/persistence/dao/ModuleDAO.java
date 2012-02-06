@@ -30,14 +30,6 @@ public class ModuleDAO extends AbstractDAO<Module> {
     }
 
     @Override
-    protected EntityManager getEntityManager() {
-        LOGGER.debug("Recuperando EntityManager.");
-        final EntityManagerFactory emf
-                = Persistence.createEntityManagerFactory("PUPadrao");
-        return emf.createEntityManager();
-    }
-
-    @Override
     protected Class<Module> getDomainClass() {
         return Module.class;
     }

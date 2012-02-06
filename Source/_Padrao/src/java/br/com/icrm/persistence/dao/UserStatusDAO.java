@@ -30,14 +30,6 @@ public class UserStatusDAO extends AbstractDAO<UserStatus> {
     }
 
     @Override
-    protected EntityManager getEntityManager() {
-        LOGGER.debug("Recuperando EntityManager.");
-        final EntityManagerFactory emf
-                = Persistence.createEntityManagerFactory("PUPadrao");
-        return emf.createEntityManager();
-    }
-
-    @Override
     protected Class<UserStatus> getDomainClass() {
         return UserStatus.class;
     }

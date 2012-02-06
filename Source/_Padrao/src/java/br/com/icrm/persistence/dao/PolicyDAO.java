@@ -29,14 +29,6 @@ public class PolicyDAO extends AbstractDAO<Policy> {
     }
 
     @Override
-    protected EntityManager getEntityManager() {
-        LOGGER.debug("Recuperando EntityManager.");
-        final EntityManagerFactory emf
-                = Persistence.createEntityManagerFactory("PUPadrao");
-        return emf.createEntityManager();
-    }
-
-    @Override
     protected Class<Policy> getDomainClass() {
         return Policy.class;
     }

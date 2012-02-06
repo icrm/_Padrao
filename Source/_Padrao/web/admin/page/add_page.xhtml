@@ -15,10 +15,10 @@
                 <h:messages globalOnly="true" errorClass="global-error" infoClass="global-success"/>
 
                 <fieldset>
-                    <legend>Módulo</legend>
+                    <legend>Página</legend>
 
                     <p class="form-row">
-                    <h:outputLabel for="module" value="Módulo: " />
+                    <h:outputLabel for="module" value="* Módulo: " />
                     <h:selectOneMenu id="module" value="#{pageBean.page.module}" required="true" requiredMessage="Informe um Módulo para esta Página." styleClass="size5">
                         <f:selectItem itemLabel="Selecione ..." itemValue="" />
                         <f:selectItems value="#{moduleBean.listItems}" />
@@ -28,7 +28,7 @@
                     </p>
 
                     <p class="form-row">
-                    <h:outputLabel for="nmPage" value="Nome: " />
+                    <h:outputLabel for="nmPage" value="* Nome: " />
                     <h:inputText
                         id="nmPage"
                         value="#{pageBean.page.nmPage}"
@@ -44,7 +44,7 @@
                     </p>
 
                     <p class="form-row">
-                    <h:outputLabel for="dsURL" value="URL: " />
+                    <h:outputLabel for="dsURL" value="* URL: " />
                     <h:inputText
                         id="dsURL"
                         value="#{pageBean.page.dsURL}"
@@ -55,9 +55,8 @@
                     </p>
 
                     <p class="form-row">
-                    <h:outputLabel for="status" value="Status: " />
+                    <h:outputLabel for="status" value="* Status: " />
                     <h:selectOneMenu id="status" value="#{pageBean.page.status}" required="true" requiredMessage="Informe o Status desta Página." styleClass="size5">
-                        <f:selectItem itemLabel="Selecione ..." itemValue="" />
                         <f:selectItems value="#{pageStatusBean.listItems}" />
                         <f:converter binding="#{pageStatusBean.converter}" />
                     </h:selectOneMenu>
@@ -75,9 +74,11 @@
                     </p>
                 </fieldset><br/>
 
+                <p><em>* Campos de preenchimento obrigatório.</em></p><br />
+
                 <p:commandButton action="#{pageBean.inserir}" value="Salvar" update="panel" rendered="#{!pageBean.editando}"/>
                 <p:commandButton action="#{pageBean.confirmarEdicao}" value="Salvar" update="panel" rendered="#{pageBean.editando}"/>
-                <p:commandButton action="#{pageBean.cancelarEdicao}" value="Cancelar" update="panel" rendered="#{pageBean.editando}"/>
+                <p:commandButton action="#{pageBean.cancelarEdicao}" process="@this" value="Cancelar" update="panel" rendered="#{pageBean.editando}"/>
                 <br /><br />
             </h:form>
 
