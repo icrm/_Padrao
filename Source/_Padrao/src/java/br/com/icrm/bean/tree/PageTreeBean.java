@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.Logger;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
@@ -18,12 +19,16 @@ import org.primefaces.model.TreeNode;
 public class PageTreeBean implements Serializable {
 
     private static final long serialVersionUID = -1L;
+    private static final Logger LOGGER;
     private TreeNode node = new DefaultTreeNode("Aplicação", null);
     private TreeNode[] selectedNodes;
     private List<Page> selectedPages = new ArrayList<Page>();
+    
+    static {
+        LOGGER = Logger.getLogger(PageTreeBean.class);
+    }
 
     public PageTreeBean() {
-        init();
     }
 
     public TreeNode getNode() {
@@ -54,6 +59,9 @@ public class PageTreeBean implements Serializable {
     private void init() {
         FacesContext fc = FacesContext.getCurrentInstance();
         ModuleBean mb = (ModuleBean) fc.getELContext().getELResolver().getValue(fc.getELContext(), null, "moduleBean");
+        for (Module module : mb.getOrphanModules()) {
+            LOGGER.debug("Montando Árvode de Módulos: Módulo [" + module.getNmModule() + "]");
+        }
         getNodes(mb.getOrphanModules(), node);
     }
 
@@ -73,8 +81,8 @@ public class PageTreeBean implements Serializable {
 
     private void getNodes(List<Module> modules, TreeNode root) {
         for (Module m : modules) {
-            TreeNode n = new DefaultTreeNode(m.getNmModule(), root);
-            n.setExpanded(true);
+            final TreeNode n = new DefaultTreeNode(m.getNmModule(), root);
+            n.setExpanded(false);
             if (m.getPages() != null) {
                 for (Page p : m.getPages()) {
                     boolean isSelected = false;
@@ -84,8 +92,11 @@ public class PageTreeBean implements Serializable {
                             break;
                         }
                     }
-                    TreeNode newNode = new DefaultTreeNode(p, n);
+                    final TreeNode newNode = new DefaultTreeNode(p, n);
                     newNode.setSelected(isSelected);
+                    if (isSelected) {
+                        newNode.setExpanded(true);
+                    }
                 }
             }
             getNodes(m.getChildren(), n);

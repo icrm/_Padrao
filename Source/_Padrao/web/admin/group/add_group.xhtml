@@ -11,16 +11,22 @@
     <ui:define name="content">
         <p:panel id="panel" header="Grupos de Usuários" style="width: 800px;">
             <h:form>
-
-                <h:messages />
+                <h:messages globalOnly="true" errorClass="global-error" infoClass="global-sucess"/>
 
                 <fieldset>
-
-                    <legend>Grupo</legend>
+                    <legend><h:outputText value="Grupo" /></legend>
 
                     <p class="form-row">
-                    <h:outputLabel for="nmGroup" value="Nome: " />
-                    <h:inputText id="nmGroup" value="#{groupBean.group.nmGroup}" styleClass="size5"/>
+                    <h:outputLabel for="nmGroup" value="* Nome: " />
+                    <h:inputText
+                        id="nmGroup"
+                        value="#{groupBean.group.nmGroup}"
+                        styleClass="size5"
+                        required="true"
+                        requiredMessage="Informe o Nome do Grupo">
+                        <f:validator validatorId="specialChar" />
+                    </h:inputText>
+                    <h:message for="nmGroup" styleClass="local-error" />
                     </p>
 
                     <p class="form-row">
@@ -30,29 +36,33 @@
 
                 </fieldset><br />
 
-                <fieldset>
+                <h:panelGrid columns="2" columnClasses="top-col,top-col">
+                    <h:column>
+                        <fieldset>
+                            <legend><h:outputText value="Páginas" /></legend>
+                            <p:tree value="#{pageTreeBean.node}" selectionMode="checkbox" selection="#{pageTreeBean.selectedNodes}" var="node" style="width: 264px;">
+                                <p:treeNode>
+                                    <h:outputText value="#{node}" />
+                                </p:treeNode>
+                            </p:tree>
 
-                    <legend>Páginas</legend>
-                    <p:tree value="#{pageTreeBean.node}" selectionMode="checkbox" selection="#{pageTreeBean.selectedNodes}"
-                            propagateSelectionDown="true" propagateSelectionUp="true" var="node" expanded="true">
-                        <p:treeNode>
-                            <h:outputText value="#{node}" />
-                        </p:treeNode>
-                    </p:tree>
-
-                </fieldset><br />
-
-                <fieldset>
-                    <legend><h:outputText value="Diretivas" /></legend>
-
-                    <p:pickList value="#{policyPickListBean.policies}" var="policy" 
-                                itemLabel="#{policy.nmPolicy}" itemValue="#{policy}" converter="#{policyBean.converter}"
-                                addAllLabel="Adicionar Todos" addLabel="Adicionar"
-                                removeAllLabel="Remover Todos" removeLabel="Remover" id="pickList">
-                        <f:facet name="sourceCaption">Diretivas Disponíveis</f:facet>
-                        <f:facet name="targetCaption">Diretivas Associadas</f:facet>
-                    </p:pickList>
-                </fieldset><br />
+                        </fieldset>
+                    </h:column>
+                    <h:column>
+                        <fieldset>
+                            <legend><h:outputText value="Diretivas" /></legend>
+                            <p:pickList value="#{policyPickListBean.policies}" var="policy" 
+                                        itemLabel="#{policy.nmPolicy}" itemValue="#{policy}" converter="#{policyBean.converter}"
+                                        addAllLabel="Adicionar Todos" addLabel="Adicionar"
+                                        removeAllLabel="Remover Todos" removeLabel="Remover" id="pickList">
+                                <f:facet name="sourceCaption">Diretivas Disponíveis</f:facet>
+                                <f:facet name="targetCaption">Diretivas Associadas</f:facet>
+                            </p:pickList>
+                        </fieldset><br />
+                    </h:column>
+                </h:panelGrid>
+                
+                <p><em>* Campos de preenchimento obrigatório.</em></p><br />
 
                 <p:commandButton action="#{groupBean.inserir}" value="Salvar" update="panel" rendered="#{!groupBean.editando}"/>
                 <p:commandButton action="#{groupBean.confirmarEdicao}" value="Salvar" update="panel" rendered="#{groupBean.editando}"/>
@@ -98,7 +108,7 @@
 
         <h:form>
             <p:confirmDialog message="Deseja realmente excluir este registro?" header="Confirmar exclusão do Registro" severity="alert" widgetVar="confirm">
-                <p:commandButton value="Sim" action="#{groupBean.excluir}" oncomplete="confirm.hide()" update=":panel" />
+                <p:commandButton value="Sim" action="#{groupBean.excluir}" oncomplete="confirm.hide()" update="panel" />
                 <p:commandButton value="Não" action="#{groupBean.cancelarExclusao}" oncomplete="confirm.hide()" />
             </p:confirmDialog>
         </h:form>
