@@ -17,7 +17,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
-import javax.faces.model.SelectItemGroup;
 import org.apache.log4j.Logger;
 
 @ManagedBean(name = "moduleBean")
@@ -30,6 +29,7 @@ public class ModuleBean implements Serializable {
     private Module module = new Module();
     private List<Module> modules = new ArrayList<Module>();
     private List<Module> orphanModules = new ArrayList<Module>();
+    private List<SelectItem> orderedListItems = new ArrayList<SelectItem>();
     private Module[] selectedModules;
     private boolean editando = false;
 
@@ -199,7 +199,7 @@ public class ModuleBean implements Serializable {
     public void cancelarExclusao() {
         this.module = new Module();
     }
-
+/*
     public List<SelectItem> getTreeModules() {
         return getTreeModules(getOrphanModules());
     }
@@ -214,6 +214,29 @@ public class ModuleBean implements Serializable {
             listItems.add(g);
         }
         return listItems;
+    }
+*/
+    public List<SelectItem> getOrderedListItems() {
+        orderedListItems.clear();
+        return getOrderedListItems(getOrphanModules(), 0);
+    }
+
+    private List<SelectItem> getOrderedListItems(final List<Module> mods,
+            final int level) {
+        final StringBuilder prefix = new StringBuilder();
+        for (int i = 0; i < level; i++) {
+            prefix.append("&nbsp;");
+        }
+
+        for (Module m : mods) {
+            SelectItem g = new SelectItem(m, prefix.toString() + m.getNmModule());
+            g.setEscape(false);
+            orderedListItems.add(g);
+            if (m.getChildren() != null && m.getChildren().size() > 0) {
+                getOrderedListItems(m.getChildren(), level + 4);
+            }
+        }
+        return orderedListItems;
     }
 
     public ModuleDataModel getDataModel() {

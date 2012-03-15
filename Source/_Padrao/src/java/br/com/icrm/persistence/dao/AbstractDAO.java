@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.RollbackException;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.apache.log4j.Logger;
@@ -65,7 +66,7 @@ public abstract class AbstractDAO<T> implements Serializable {
      * @param tipo Objeto a ser inserido.
      * @return <T>
      */
-    public final T insert(final T tipo) {
+    public T insert(final T tipo) {
         LOGGER.debug("Iniciando [INSERT] da Entidade "
                 + getDomainClass().getName() + ".");
         final EntityManager entity = this.getEntityManager();
@@ -96,7 +97,7 @@ public abstract class AbstractDAO<T> implements Serializable {
      * @param tipo Objeto a ser atualizado.
      * @return <T>
      */
-    public final T update(final T tipo) {
+    public T update(final T tipo) {
         LOGGER.debug("Iniciando [UPDATE] da Entidade "
                 + getDomainClass().getName() + ".");
         final EntityManager entity = this.getEntityManager();
@@ -119,7 +120,7 @@ public abstract class AbstractDAO<T> implements Serializable {
      *
      * @param tipo Objeto a ser excluído.
      */
-    public final void delete(final T tipo) {
+    public void delete(final T tipo) {
         LOGGER.debug("Iniciando [DELETE] da Entidade "
                 + getDomainClass().getName() + ".");
         final EntityManager entity = this.getEntityManager();
@@ -141,7 +142,7 @@ public abstract class AbstractDAO<T> implements Serializable {
      *
      * @return int Total de Objetos persistidos.
      */
-    public final long count() {
+    public long count() {
         LOGGER.debug("Iniciando [COUNT] da Entidade "
                 + getDomainClass().getName() + ".");
         final EntityManager entity = this.getEntityManager();
@@ -169,7 +170,7 @@ public abstract class AbstractDAO<T> implements Serializable {
      *
      * @return List<T> Lista com todos os Objetos já persistidos.
      */
-    public final List<T> findAll() {
+    public List<T> findAll() {
         LOGGER.debug("Iniciando [FIND-ALL] da Entidade "
                 + getDomainClass().getName() + ".");
         final EntityManager entity = this.getEntityManager();
@@ -192,7 +193,7 @@ public abstract class AbstractDAO<T> implements Serializable {
      * @param identifier identificador do Objeto.
      * @return <T>
      */
-    public final T findById(final Object identifier) {
+    public T findById(final Object identifier) {
         LOGGER.debug("Iniciando [FIND-BY-ID] da Entidade "
                 + getDomainClass().getName() + ".");
         final EntityManager entity = this.getEntityManager();
@@ -205,5 +206,54 @@ public abstract class AbstractDAO<T> implements Serializable {
         LOGGER.debug("Finalizando [FIND-BY-ID] da Entidade "
                 + getDomainClass().getName() + ".");
         return objeto;
+    }
+
+    /**
+     * Método que recupera um Objeto apartir de um campo qualquer com um
+     * valor qualquer.
+     *
+     * @param fieldName Nome do Campo a ser utilizado para o filtro.
+     * @param fieldType Classe que representa o tipo de Valor do Campo.
+     * @param fieldValue Valor a ser utilizado para filtrar.
+     * @return <T>
+     */
+    public T findByField(final String fieldName, final Class<?> fieldType,
+            final String fieldValue) {
+        LOGGER.debug("Iniciando [FIND-BY-FIELD] da Entidade "
+                + getDomainClass().getName() + ".");
+
+        LOGGER.debug("Criando Instância de CriteriaBuilder.");
+        final CriteriaBuilder cbuilder
+                = getEntityManager().getCriteriaBuilder();
+
+        LOGGER.debug("Criando Instância de CriteriaQuery.");
+        final CriteriaQuery criteria = cbuilder.createQuery(getDomainClass());
+
+        LOGGER.debug("Criando Instância de Root.");
+        final Root<T> root = criteria.from(getDomainClass());
+
+        LOGGER.debug("Definindo Query de Seleção.");
+        criteria.where(cbuilder.equal(root
+                .get(root.getModel()
+                .getSingularAttribute(fieldName, fieldType)), fieldValue));
+
+        T typed = null;
+        try {
+            LOGGER.info("Recuperando registro da Entidade "
+                    + getDomainClass().getName()
+                    + " através do Campo [" + fieldName + "] com valor ["
+                    + fieldValue + "].");
+            typed = (T) getEntityManager().createQuery(criteria)
+                    .getSingleResult();
+        } catch (RuntimeException ex) {
+            LOGGER.error("Erro ao recuperar Registro da Entidade "
+                    + getDomainClass().getName()
+                    + " através do Campo [" + fieldName + "] com valor ["
+                    + fieldValue + "].", ex);
+        }
+
+        LOGGER.debug("Finalizando [FIND-BY-FIELD] da Entidade "
+                + getDomainClass().getName() + ".");
+        return typed;
     }
 }

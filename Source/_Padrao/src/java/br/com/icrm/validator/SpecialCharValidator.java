@@ -1,7 +1,5 @@
 package br.com.icrm.validator;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -27,10 +25,24 @@ public class SpecialCharValidator implements Validator {
 
     @Override
     public void validate(FacesContext context, UIComponent component, final Object value) throws ValidatorException {
-        LOGGER.debug("Verificando se o E-mail é compatível com o Pattern.");
+        LOGGER.debug("Verificando se o valor é compatível com o Pattern.");
+        String clean = ((String) value).trim();
+
+        LOGGER.debug("Valor Limpo : [" + clean + "]");
+
+        if ("".equals(clean)) {
+            LOGGER.debug("Nenhum valor foi informado.");
+            final FacesMessage msg =
+                    new FacesMessage("O valor não pode ser formado só"
+                            + " por espaços.",
+                            "O valor não pode ser formado só por espaços.");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            LOGGER.debug("Finalizando validação de Caracteres Especiais.");
+            throw new ValidatorException(msg);
+        }
 
         for (int i = 0; i < SPECIAL_PATTERN.length(); i++) {
-            if (((String) value).indexOf(SPECIAL_PATTERN.charAt(i)) > -1) {
+            if (clean.indexOf(SPECIAL_PATTERN.charAt(i)) > -1) {
                 LOGGER.debug("O Valor informado não pode conter "
                         + "caracteres especiais.");
                 final FacesMessage msg =

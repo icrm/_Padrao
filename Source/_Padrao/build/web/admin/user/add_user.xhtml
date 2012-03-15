@@ -22,7 +22,8 @@
                         id="nmUser"
                         value="#{userBean.user.nmUser}"
                         required="true"
-                        requiredMessage="Informe o Nome do Usuário">
+                        requiredMessage="Informe o Nome do Usuário"
+                        styleClass="size4">
                         <f:validator validatorId="specialChar" />
                     </h:inputText>
                     <h:message for="nmUser" styleClass="local-error" />
@@ -35,7 +36,8 @@
                         value="#{userBean.user.dsEmail}"
                         readonly="#{userBean.editando}"
                         required="true"
-                        requiredMessage="Informe o E-mail do Usuário.">
+                        requiredMessage="Informe o E-mail do Usuário."
+                        styleClass="size4">
                         <f:validator validatorId="br.com.icrm.validator.Email" />
                     </h:inputText>
                     <h:message for="dsEmail" styleClass="local-error" />
@@ -49,15 +51,15 @@
                         rendered="#{!userBean.editando}"
                         required="true"
                         requiredMessage="Informe a Senha do Usuário"
-                        validatorMessage="A Senha deve conter no mínimo 6 caracteres.">
-                        <f:validateLength minimum="6" />
+                        styleClass="size4">
+                        <f:validator validatorId="password" />
                     </h:inputSecret>
                     <h:message for="dsPassword" styleClass="local-error" />
                     </p>
 
                     <p class="form-row">
                     <h:outputLabel for="group" value="* Grupo: " />
-                    <h:selectOneMenu id="group" value="#{userBean.user.group}" required="true" requiredMessage="Selecione um Grupo de Usuários.">
+                    <h:selectOneMenu id="group" value="#{userBean.user.group}" required="true" requiredMessage="Selecione um Grupo de Usuários." styleClass="size4">
                         <f:selectItem itemLabel="Selecione ..." itemValue="" />
                         <f:selectItems value="#{groupBean.listItems}" />
                         <f:converter binding="#{groupBean.converter}" />
@@ -67,8 +69,7 @@
 
                     <p class="form-row">
                     <h:outputLabel for="status" value="* Status: " />
-                    <h:selectOneMenu id="status" value="#{userBean.user.status}" required="true" requiredMessage="Informe o Status deste Usuário">
-                        <f:selectItem itemLabel="Selecione ..." itemValue="" />
+                    <h:selectOneMenu id="status" value="#{userBean.user.status}" required="true" requiredMessage="Informe o Status deste Usuário" styleClass="size4">
                         <f:selectItems value="#{userStatusBean.listItems}" />
                         <f:converter binding="#{userStatusBean.converter}" />
                     </h:selectOneMenu>

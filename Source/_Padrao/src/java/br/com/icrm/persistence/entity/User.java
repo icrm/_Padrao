@@ -165,7 +165,7 @@ public class User implements Serializable {
      *
      * @param dsPassword - Senha do usuário.
      */
-    public void setDsPassword(String dsPassword) {
+    public void setDsPassword(final String dsPassword) {
         this.dsPassword = dsPassword;
     }
 

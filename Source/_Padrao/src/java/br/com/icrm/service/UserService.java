@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.Logger;
 
 /**
  * Classe com métodos de Serviço para a Entidade User.
@@ -24,8 +25,13 @@ import javax.faces.bean.SessionScoped;
 public class UserService implements Serializable {
 
     private static final long serialVersionUID = -1L;
+    private static final Logger LOGGER;
     private UserDAO userDAO = new UserDAO();
     private User user;
+    
+    static {
+        LOGGER = Logger.getLogger(UserService.class);
+    }
 
     public void setUser(User user) {
         this.user = user;

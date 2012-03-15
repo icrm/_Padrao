@@ -28,6 +28,10 @@
                         required="true"
                         requiredMessage="Informe o Nome do Módulo">
                         <f:validator validatorId="specialChar" />
+                        <f:validator validatorId="unique">
+                            <f:attribute name="service" value="#{moduleService}" />
+                            <f:attribute name="field" value="nmModule" />
+                        </f:validator>
                     </h:inputText>
                     <h:message for="nmModule"  styleClass="local-error" />
                     </p>
@@ -44,7 +48,7 @@
                     <h:outputLabel for="parent" value="Pai: " style="width: 70px;"/>
                     <h:selectOneMenu id="parent" value="#{moduleBean.module.parent}" styleClass="size4" valueChangeListener="#{moduleStatusBean.removeActive}" >
                         <f:selectItem itemLabel="Selecione ..." itemValue="" />
-                        <f:selectItems value="#{moduleBean.listItems}" />
+                        <f:selectItems value="#{moduleBean.orderedListItems}" />
                         <f:converter binding="#{moduleBean.converter}" />
                         <f:ajax render="status" />
                     </h:selectOneMenu>

@@ -10,7 +10,7 @@
     </context-param>
     <context-param>
         <param-name>iit.VIEW_EXPIRED_PAGE</param-name>
-        <param-value>/sessao_expirada.xhtml</param-value>
+        <param-value>/admin/login.xhtml</param-value>
     </context-param>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>

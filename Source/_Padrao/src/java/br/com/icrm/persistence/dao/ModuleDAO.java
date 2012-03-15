@@ -2,9 +2,6 @@ package br.com.icrm.persistence.dao;
 
 import br.com.icrm.persistence.entity.Module;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;

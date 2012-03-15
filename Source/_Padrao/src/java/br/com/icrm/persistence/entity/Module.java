@@ -54,14 +54,14 @@ public class Module implements Serializable {
      * Variável que representa o relacionamento de muitos para um com a
      * tabela GU_MODULE.
      */
-    @ManyToOne(targetEntity = Module.class, fetch= FetchType.EAGER)
+    @ManyToOne(targetEntity = Module.class)
     @JoinColumn(name = "CD_PARENT")
     private Module parent;
     /**
      * Variável que representa o relacionamento de um para muitos com a
      * tabela GU_MODULE.
      */
-    @OneToMany(mappedBy = "parent", targetEntity = Module.class, fetch= FetchType.EAGER)
+    @OneToMany(mappedBy = "parent", targetEntity = Module.class)
     private List<Module> children = new ArrayList<Module>();
     /**
      * Variável que representa o campo NM_MODULE da tabela GU_MODULE.
@@ -101,6 +101,25 @@ public class Module implements Serializable {
      */
     public Module() {
         //LOGGER.debug("Instância da Entidade Module foi criada.");
+    }
+
+    /**
+     * Construtor com todos os parametros.
+     * 
+     * @param cdModule Código do Módulo.
+     * @param parent Código do Módulo Pai.
+     * @param nmModule Nome do Módulo.
+     * @param dsModule Descrição do Módulo.
+     * @param status Status do Módulo.
+     */
+    public Module(final Long cdModule, final Module parent,
+            final String nmModule, final String dsModule,
+            final ModuleStatus status) {
+        this.cdModule = cdModule;
+        this.parent = parent;
+        this.nmModule = nmModule;
+        this.dsModule = dsModule;
+        this.status = status;
     }
 
     /**

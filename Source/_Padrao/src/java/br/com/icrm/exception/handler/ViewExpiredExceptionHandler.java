@@ -3,6 +3,7 @@ package br.com.icrm.exception.handler;
 import java.util.Iterator;
 import java.util.Map;
 import javax.faces.FacesException;
+import javax.faces.application.FacesMessage;
 import javax.faces.application.NavigationHandler;
 import javax.faces.application.ViewExpiredException;
 import javax.faces.context.ExceptionHandler;
@@ -49,6 +50,9 @@ public class ViewExpiredExceptionHandler extends ExceptionHandlerWrapper {
                 Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
                 NavigationHandler nav = fc.getApplication().getNavigationHandler();
                 try {
+                    FacesMessage msg = new FacesMessage("Sessão Expirada!");
+                    msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+                    fc.addMessage(null, msg);
                     requestMap.put("currentViewId", vee.getViewId());
                     nav.handleNavigation(fc, null, fc.getExternalContext().getInitParameter("iit.VIEW_EXPIRED_PAGE"));
                     fc.renderResponse();
