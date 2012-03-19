@@ -99,6 +99,7 @@ public class UserBean implements Serializable {
 
     public void inserir() {
         try {
+            user.getResponses().add(response);
             service.insert(user);
         } catch (PermissionException ex) {
             FacesContext.getCurrentInstance().addMessage(null,
@@ -118,6 +119,7 @@ public class UserBean implements Serializable {
 
     public void confirmarEdicao() {
         try {
+            
             service.update(user);
         } catch (PermissionException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Você não tem permissão para Editar um Usuário."));

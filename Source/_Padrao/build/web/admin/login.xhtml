@@ -6,7 +6,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>ACCMM - Login</title>
+        <title>IDIT - Login</title>
         <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/css/default-theme/default.css" media="screen" />
         <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/css/admin.css" media="screen" />
     </h:head>
@@ -32,6 +32,13 @@
                     <h:commandLink value="Esqueceu a sua senha?" action="#{login.login}" />
                 </fieldset>
             </h:form>
+            <div id="footer">
+                <p id="copy">
+                <h:outputText value="&#169; Todos os direitos reservados - IDiT 2012" escape="true"/>
+                </p>
+                <p id="credits">
+                </p>
+            </div>
         </div>
 
     </h:body>
