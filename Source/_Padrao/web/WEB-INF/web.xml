@@ -9,7 +9,7 @@
         <param-value>none</param-value>
     </context-param>
     <context-param>
-        <param-name>iit.VIEW_EXPIRED_PAGE</param-name>
+        <param-name>idit.VIEW_EXPIRED_PAGE</param-name>
         <param-value>/admin/login.xhtml</param-value>
     </context-param>
     <servlet>
@@ -19,7 +19,7 @@
     </servlet>
     <filter>
         <filter-name>AdminFilter</filter-name>
-        <filter-class>br.com.icrm.filter.AdminFilter</filter-class>
+        <filter-class>br.com.idit.filter.AdminFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>

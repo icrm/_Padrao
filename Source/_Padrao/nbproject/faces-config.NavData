@@ -2,17 +2,18 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
-        <Node id="admin/policy/add_policy.xhtml" x="511" y="311" zoom="true"/>
         <Node id="admin/user/add_user.xhtml" x="72" y="104" zoom="true"/>
         <Node id="sessao_expirada.xhtml" x="950" y="369" zoom="true"/>
         <Node id="admin/index.xhtml" x="887" y="93" zoom="true"/>
-        <Node id="index.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="admin/secret_question/add_secret_question.xhtml" x="400" y="150" zoom="true"/>
         <Node id="access_denied.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="resources/templates/kies.xhtml" x="248" y="170" zoom="true"/>
+        <Node id="admin/module/add_module.xhtml" x="756" y="175" zoom="true"/>
+        <Node id="admin/policy/add_policy.xhtml" x="511" y="311" zoom="true"/>
+        <Node id="index.xhtml" x="150" y="600" zoom="true"/>
         <Node id="resources/templates/default_admin.xhtml" x="846" y="250" zoom="true"/>
         <Node id="admin/login.xhtml" x="532" y="95" zoom="true"/>
-        <Node id="resources/templates/kies.xhtml" x="248" y="170" zoom="true"/>
         <Node id="admin/group/add_group.xhtml" x="63" y="404" zoom="true"/>
-        <Node id="admin/module/add_module.xhtml" x="756" y="175" zoom="true"/>
         <Node id="admin/page/add_page.xhtml" x="477" y="455" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>

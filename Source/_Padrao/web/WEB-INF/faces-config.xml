@@ -8,7 +8,7 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
 
     <factory>
-        <exception-handler-factory>br.com.icrm.exception.handler.factory.ViewExpiredExceptionHandlerFactory</exception-handler-factory>
+        <exception-handler-factory>br.com.idit.exception.handler.factory.ViewExpiredExceptionHandlerFactory</exception-handler-factory>
     </factory>
 
 </faces-config>

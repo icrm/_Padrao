@@ -75,7 +75,33 @@
                     </h:selectOneMenu>
                     <h:message for="status" styleClass="local-error" />
                     </p>
-                </fieldset><br />
+                </fieldset>
+                <fieldset>
+                    <legend>Pergunta Secreta</legend>
+                    <p class="form-row">
+                    <h:outputLabel for="secretQuestion" value="* Pergunta Secreta" />
+                    <h:selectOneMenu
+                        id="secretQuestion"
+                        value="#{userBean.response.question}"
+                        required="true"
+                        requiredMessage="Escolha uma Pergunta Secreta"
+                        styleClass="size5">
+                        <f:selectItem itemValue="" itemLabel="Selecione..." />
+                        <f:selectItems value="#{secretQuestionBean.listItems}" />
+                    </h:selectOneMenu>
+                    <h:message for="secretQuestion" styleClass="local-error" />
+                    </p>
+                    <p class="form-row">
+                    <h:outputLabel for="dsResponse" value="* Resposta" />
+                    <h:inputText
+                        id="dsResponse"
+                        value="#{userBean.response.dsResponse}"
+                        required="true"
+                        requiredMessage="Responda à Pergunta Secreta"/>
+                    <h:message for="dsResponse" styleClass="local-error" />
+                    </p>
+                </fieldset>
+                <br />
                 
                 <p><em>* Campos de preenchimento obrigatório.</em></p><br />
 

@@ -13,22 +13,24 @@
     <h:body>
 
         <div id="container">
-            <h:form>
-                <div class="center-login">
-                    <fieldset class="login">
-                        <legend>Login</legend>
-                        <h:outputLabel for="login" value="E-mail: " />
-                        <h:inputText id="login" value="#{login.email}" required="true" requiredMessage="O Campo E-mail deve ser preenchido!" /><br />
+            <h:form id="login">
+                <h1>Login</h1>
+                <h:messages id="msgs" styleClass="global-error" globalOnly=""/>
+                <fieldset id="inputs" class="login">
+                    <h:outputLabel for="login" value="E-mail: " />
+                    <h:inputText id="login" value="#{login.email}" required="true" requiredMessage="O Campo E-mail deve ser preenchido!" /><br />
+                    <p:watermark for="login" value="email@exemplo.com.br" />
 
-                        <h:outputLabel for="password" value="Senha: " />
-                        <h:inputSecret id="password" value="#{login.password}" required="true" requiredMessage="O Campo Senha deve ser preenchido!" /><br />
-
-                        <p:commandButton value="Entrar" action="#{login.login}" update="msgs" ajax="false">
-                            <f:setPropertyActionListener target="#{login.redirectTo}" value="#{requestScope.redirectTo}" />
-                        </p:commandButton>
-                    </fieldset>
-                    <h:messages id="msgs" styleClass="global-error" globalOnly=""/>
-                </div>
+                    <h:outputLabel for="password" value="Senha: " />
+                    <h:inputSecret id="password" value="#{login.password}" required="true" requiredMessage="O Campo Senha deve ser preenchido!" /><br />
+                    <p:watermark for="password" value="******" />
+                </fieldset>
+                <fieldset id="actions">
+                    <p:commandButton value="Entrar" action="#{login.login}" update="msgs" ajax="false">
+                        <f:setPropertyActionListener target="#{login.redirectTo}" value="#{requestScope.redirectTo}" />
+                    </p:commandButton>
+                    <h:commandLink value="Esqueceu a sua senha?" action="#{login.login}" />
+                </fieldset>
             </h:form>
         </div>
 
