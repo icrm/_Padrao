@@ -87,7 +87,7 @@ public class UserStatusService implements Serializable {
      * @see ICRMException
      */
     public UserStatus findByName(final String name) throws ICRMException {
-        if (!Security.checkPolicy(this.user, GET_PERMISSION)) {
+        if (!Security.checkPolicy(this.user, GET_PERMISSION, "insertUser")) {
             throw new PermissionException(user.getNmUser(), GET_PERMISSION);
         }
         return userStatusDAO.findByName(name);
@@ -111,7 +111,7 @@ public class UserStatusService implements Serializable {
      * @return List<UserStatus> - Lista com todos os Objetos
      */
     public List<UserStatus> findAll() throws ICRMException {
-        if (!Security.checkPolicy(this.user, LIST_PERMISSION)) {
+        if (!Security.checkPolicy(this.user, LIST_PERMISSION, "insertUser")) {
             throw new PermissionException(user.getNmUser(), LIST_PERMISSION);
         }
         return userStatusDAO.findAll();
@@ -124,7 +124,7 @@ public class UserStatusService implements Serializable {
      * @return UserStatus - Objeto.
      */
     public UserStatus findById(final Object identifier) throws ICRMException {
-        if (!Security.checkPolicy(this.user, GET_PERMISSION)) {
+        if (!Security.checkPolicy(this.user, GET_PERMISSION, "insertUser")) {
             throw new PermissionException(user.getNmUser(), GET_PERMISSION);
         }
         return userStatusDAO.findById(identifier);

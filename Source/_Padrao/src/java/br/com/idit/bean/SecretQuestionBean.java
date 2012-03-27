@@ -26,6 +26,7 @@ public class SecretQuestionBean implements Serializable {
     private SecretQuestionService service = new SecretQuestionService();
     private SecretQuestion question = new SecretQuestion();
     private List<SecretQuestion> questions = new ArrayList<SecretQuestion>();
+    private List<SecretQuestion> activeQuestions = new ArrayList<SecretQuestion>();
     private boolean editando = false;
 
     static {
@@ -39,6 +40,7 @@ public class SecretQuestionBean implements Serializable {
             service.setUser(session.getLoggedUser());
             try {
                 questions = service.findAll();
+                activeQuestions = service.findAllActive();
             } catch (PermissionException ex) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Você não tem permissão para visualizar as informações das Perguntas Secretas."));
                 LOGGER.error(ex);
@@ -72,9 +74,25 @@ public class SecretQuestionBean implements Serializable {
         this.questions = questions;
     }
 
+    public List<SecretQuestion> getActiveQuestions() {
+        return activeQuestions;
+    }
+
+    public void setActiveQuestions(List<SecretQuestion> activeQuestions) {
+        this.activeQuestions = activeQuestions;
+    }
+
     public List<SelectItem> getListItems() {
-        List<SelectItem> listItems = new ArrayList<SelectItem>();
+        final List<SelectItem> listItems = new ArrayList<SelectItem>();
         for (SecretQuestion p : getQuestions()) {
+            listItems.add(new SelectItem(p, p.getDsQuestion()));
+        }
+        return listItems;
+    }
+    
+    public List<SelectItem> getActiveListItems() {
+        final List<SelectItem> listItems = new ArrayList<SelectItem>();
+        for (SecretQuestion p : getActiveQuestions()) {
             listItems.add(new SelectItem(p, p.getDsQuestion()));
         }
         return listItems;
@@ -101,6 +119,7 @@ public class SecretQuestionBean implements Serializable {
 
     public void editar() {
         this.editando = true;
+        this.getQuestions().remove(this.question);
     }
 
     public void confirmarEdicao() {
@@ -134,6 +153,7 @@ public class SecretQuestionBean implements Serializable {
     public void cancelarEdicao() {
         this.question = new SecretQuestion();
         this.editando = false;
+        init();
     }
 
     public void cancelarExclusao() {

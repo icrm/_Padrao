@@ -28,7 +28,7 @@ public class GroupService implements Serializable {
     }
 
     public Group findByName(String name) throws ICRMException {
-        if (!Security.checkPolicy(this.user, "getGroup")) {
+        if (!Security.checkPolicy(this.user, "getGroup", "insertUser")) {
             throw new PermissionException(user.getNmUser(), "getGroup");
         }
         return groupDAO.findByName(name);
@@ -42,14 +42,14 @@ public class GroupService implements Serializable {
     }
 
     public List<Group> findAll() throws ICRMException {
-        if (!Security.checkPolicy(this.user, "listGroup")) {
+        if (!Security.checkPolicy(this.user, "listGroup", "insertUser")) {
             throw new PermissionException(user.getNmUser(), "listGroup");
         }
         return groupDAO.findAll();
     }
 
     public Group findById(Object id) throws ICRMException {
-        if (!Security.checkPolicy(this.user, "getGroup")) {
+        if (!Security.checkPolicy(this.user, "getGroup", "insertUser")) {
             throw new PermissionException(user.getNmUser(), "getGroup");
         }
         return groupDAO.findById(id);

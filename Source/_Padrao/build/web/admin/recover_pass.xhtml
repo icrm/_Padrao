@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>IDIT - Recuperar Senha</title>
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/css/default-theme/default.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/css/admin.css" media="screen" />
+    </h:head>
+    <body>
+        <div id="container" style="width: 461px;">
+            <h:form id="login">
+                <h1>Recuperar Senha</h1>
+                <p>Para redefinir sua senha, digite o email que você utiliza para fazer login.</p>
+                <h:messages id="msgs" styleClass="global-error" globalOnly=""/>
+                <fieldset id="inputs">
+
+                    <h:outputLabel for="email" value="E-mail: " />
+                    <h:inputText id="email" value="#{recoverPassword.email}" required="true" requiredMessage="O Campo E-mail deve ser preenchido!" /><br />
+                    <p:watermark for="email" value="email@exemplo.com.br" />
+
+                    <h:outputLabel for="response" value="#{recoverPassword.secretQuestionResponse.question.dsQuestion}" rendered="#{recoverPassword.emailOk}"/>
+                    <h:inputText id="response" value="#{recoverPassword.response}" required="true" requiredMessage="O Campo Resposta deve ser preenchido!"  rendered="#{recoverPassword.emailOk}" />
+                    <p:watermark for="response" value="Resposta"  rendered="#{recoverPassword.emailOk}" />
+
+                    <h:outputLabel for="password" value="Senha:" rendered="#{recoverPassword.responseOk}"/>
+                    <h:inputSecret id="password" value="#{recoverPassword.password}" required="true" requiredMessage="O Campo Senha deve ser preenchido!"  rendered="#{recoverPassword.responseOk}">
+                        <f:validator validatorId="password" />
+                    </h:inputSecret>
+                    <p:watermark for="password" value="******"  rendered="#{recoverPassword.responseOk}" />
+                    <h:outputLabel for="repassword" value="Digite a senha novamente:" rendered="#{recoverPassword.responseOk}"/>
+                    <h:inputSecret id="repassword" value="#{recoverPassword.repassword}" required="true" requiredMessage="O Campo de Confirmação de Senha deve ser preenchido!"  rendered="#{recoverPassword.responseOk}" />
+                    <p:watermark for="repassword" value="******"  rendered="#{recoverPassword.responseOk}" />
+                </fieldset>
+                <fieldset id="actions" class="center">
+                    <p:commandButton value="Verificar Email" action="#{recoverPassword.verifyEmail}" update="login" rendered="#{!recoverPassword.emailOk}"/>
+                    <p:commandButton value="Responder" action="#{recoverPassword.verifyResponse}" update="login" rendered="#{(recoverPassword.emailOk)and(!recoverPassword.responseOk)}"/>
+                    <p:commandButton value="Confirmar" action="#{recoverPassword.changePassword}" rendered="#{recoverPassword.responseOk}" ajax="false"/>
+                </fieldset>
+            </h:form>
+            <div id="footer">
+                <p id="copy">
+                <h:outputText value="&#169; Todos os direitos reservados - IDiT 2012" escape="true"/>
+                <a href="http://www.idit.com.br" target="_blank" title="IDiT" id="footer-logo">
+                    <h:graphicImage alt="IDiT" title="IDiT" value="/resources/images/idit_min_logo.png" />
+                </a>
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

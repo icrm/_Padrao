@@ -27,6 +27,10 @@ public class AdminFilter implements Filter {
      */
     private FilterConfig filterConfig = null;
     /**
+     * Mapeamento para o módulo administrativo.
+     */
+    private final String ADMIN_DIRECTORY = "/admin/";
+    /**
      * Página de Login.
      */
     private final String SIGNON_PAGE = "/admin/login.xhtml";
@@ -39,6 +43,10 @@ public class AdminFilter implements Filter {
      */
     private final String INDEX_PAGE = "/admin/index.xhtml";
     /**
+     * Página para recuperar Senha.
+     */
+    private final String RECOVER_PASSWORD_PAGE = "/admin/recover_pass.xhtml";
+    /**
      * Objeto de Log.
      */
     private static final Logger LOGGER;
@@ -48,10 +56,11 @@ public class AdminFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain)
+    public void doFilter(final ServletRequest request,
+            final ServletResponse response, final FilterChain chain)
             throws IOException, ServletException {
-        LOGGER.debug("Iniciando execução do Filtro do módulo Administrativo.");
+        LOGGER.debug("Iniciando execução do Filtro "
+                + "do módulo Administrativo.");
 
         LOGGER.debug("Definindo Objeto HttpServletRequest.");
         final HttpServletRequest req = (HttpServletRequest) request;
@@ -60,8 +69,13 @@ public class AdminFilter implements Filter {
 
         final String url = cleanUrl(req.getRequestURI(), req.getContextPath());
 
+        if (url.equals(RECOVER_PASSWORD_PAGE)) {
+            chain.doFilter(req, resp);
+            return;
+        }
+
         LOGGER.debug("Recuperando a Sessão.");
-        Session session 
+        final Session session
                 = (Session) req.getSession().getAttribute("accmmSession");
 
         if (session == null) {
@@ -118,7 +132,8 @@ public class AdminFilter implements Filter {
 
     private boolean checkPagePermission(final Session session
             , final String url) {
-        if (url.equals(SIGNON_PAGE) || url.equals(INDEX_PAGE)) {
+        if (url.equals(SIGNON_PAGE) || url.equals(INDEX_PAGE)
+                || url.equals(ADMIN_DIRECTORY)) {
             return true;
         }
         boolean permission = false;

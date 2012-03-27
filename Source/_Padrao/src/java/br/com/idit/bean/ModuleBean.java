@@ -49,7 +49,7 @@ public class ModuleBean implements Serializable {
     }
 
     @PostConstruct
-    private void init() {
+    public void init() {
         Session session = (Session) FacesContext.getCurrentInstance().getELContext().getELResolver().getValue(FacesContext.getCurrentInstance().getELContext(), null, "accmmSession");
         if (session != null) {
             if (session.getLoggedUser() != null) {
@@ -199,23 +199,7 @@ public class ModuleBean implements Serializable {
     public void cancelarExclusao() {
         this.module = new Module();
     }
-/*
-    public List<SelectItem> getTreeModules() {
-        return getTreeModules(getOrphanModules());
-    }
 
-    private List<SelectItem> getTreeModules(List<Module> modules) {
-        List<SelectItem> listItems = new ArrayList<SelectItem>();
-        for (Module m : modules) {
-            SelectItemGroup g = new SelectItemGroup(m.getNmModule());
-            if (m.getChildren() != null && m.getChildren().size() > 0) {
-                getTreeModules(m.getChildren());
-            }
-            listItems.add(g);
-        }
-        return listItems;
-    }
-*/
     public List<SelectItem> getOrderedListItems() {
         orderedListItems.clear();
         return getOrderedListItems(getOrphanModules(), 0);

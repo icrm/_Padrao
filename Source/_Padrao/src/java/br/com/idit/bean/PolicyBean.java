@@ -21,15 +21,12 @@ import org.apache.log4j.Logger;
 @ViewScoped
 public class PolicyBean implements Serializable {
 
-    // ATTRIBUTES
-    //<editor-fold>
     private static final long serialVersionUID = -1L;
     private static final Logger logger;
     private PolicyService service = new PolicyService();
     private Policy policy = new Policy();
     private List<Policy> policies = new ArrayList<Policy>();
     private boolean editando = false;
-    //</editor-fold>
 
     static {
         logger = Logger.getLogger(PolicyBean.class);
@@ -54,8 +51,6 @@ public class PolicyBean implements Serializable {
         }
     }
 
-    // GETTERS AND SETTERS
-    //<editor-fold>
     public List<Policy> getPolicies() {
         return policies;
     }
@@ -110,6 +105,7 @@ public class PolicyBean implements Serializable {
 
     public void editar() {
         this.editando = true;
+        this.getPolicies().add(this.policy);
     }
 
     public void confirmarEdicao() {
@@ -149,5 +145,5 @@ public class PolicyBean implements Serializable {
     public void cancelarExclusao() {
         this.policy = new Policy();
     }
-    //</editor-fold>
+
 }

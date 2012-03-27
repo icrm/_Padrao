@@ -51,9 +51,16 @@ public class GroupBean implements Serializable {
             pService.setUser(session.getLoggedUser());
             try {
                 this.groups = service.findAll();
-                this.policies = pService.findAll();
             } catch (PermissionException ex) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Você não tem permissão para visualizar as informações de Grupos."));
+                logger.error(ex);
+            } catch (ICRMException ex) {
+                logger.error("Problema ao executar PostConstruct", ex);
+            }
+            try {
+                this.policies = pService.findAll();
+            } catch (PermissionException ex) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Você não tem permissão para visualizar as informações de Diretivas."));
                 logger.error(ex);
             } catch (ICRMException ex) {
                 logger.error("Problema ao executar PostConstruct", ex);
@@ -83,6 +90,7 @@ public class GroupBean implements Serializable {
 
     public void setEditando(boolean editando) {
         this.editando = editando;
+        this.getGroups().remove(this.group);
     }
 
     public List<SelectItem> getListItems() {

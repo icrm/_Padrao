@@ -42,15 +42,15 @@ public class ViewExpiredExceptionHandler extends ExceptionHandlerWrapper {
                 ViewExpiredException vee = (ViewExpiredException) t;
                 FacesContext fc = FacesContext.getCurrentInstance();
                 String requestType = fc.getExternalContext().getRequestHeaderMap().get("Faces-Request");
-                
+
                 if ("partial/ajax".equals(requestType)) {
                     throw new FacesException();
                 }
-                
+
                 Map<String, Object> requestMap = fc.getExternalContext().getRequestMap();
                 NavigationHandler nav = fc.getApplication().getNavigationHandler();
                 try {
-                    FacesMessage msg = new FacesMessage("Sessão Expirada!");
+                    FacesMessage msg = new FacesMessage("Sessão Expirada! Por favor, faça login novamente.");
                     msg.setSeverity(FacesMessage.SEVERITY_ERROR);
                     fc.addMessage(null, msg);
                     requestMap.put("currentViewId", vee.getViewId());

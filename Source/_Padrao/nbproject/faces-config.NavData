@@ -3,8 +3,8 @@
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
         <Node id="admin/user/add_user.xhtml" x="72" y="104" zoom="true"/>
-        <Node id="sessao_expirada.xhtml" x="950" y="369" zoom="true"/>
         <Node id="admin/index.xhtml" x="887" y="93" zoom="true"/>
+        <Node id="sessao_expirada.xhtml" x="950" y="369" zoom="true"/>
         <Node id="admin/secret_question/add_secret_question.xhtml" x="400" y="150" zoom="true"/>
         <Node id="access_denied.xhtml" x="150" y="300" zoom="true"/>
         <Node id="resources/templates/kies.xhtml" x="248" y="170" zoom="true"/>

@@ -99,6 +99,7 @@ public class UserBean implements Serializable {
 
     public void inserir() {
         try {
+            response.setUser(user);
             user.getResponses().add(response);
             service.insert(user);
         } catch (PermissionException ex) {
@@ -110,17 +111,21 @@ public class UserBean implements Serializable {
             logger.error("Problema ao inserir um novo Usuário.", ex);
         }
         user = new User();
+        response = new SecretQuestionResponse();
         init();
     }
 
     public void editar() {
         this.editando = true;
+        this.response = (this.user.getResponses().size()>0) ? this.user.getResponses().get(0) : new SecretQuestionResponse();
+        this.getUsers().remove(this.user);
     }
 
     public void confirmarEdicao() {
         try {
-            
-            service.update(user);
+            response.setUser(user);
+            user.getResponses().add(response);
+            service.update(this.user);
         } catch (PermissionException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Você não tem permissão para Editar um Usuário."));
             logger.error(ex);
@@ -128,30 +133,35 @@ public class UserBean implements Serializable {
             logger.error("Problema ao editar um Usuário.", ex);
         }
         this.editando = false;
-        user = new User();
+        this.user = new User();
+        this.response = new SecretQuestionResponse();
         init();
     }
 
     public void excluir() {
         try {
-            service.delete(user);
+            service.delete(this.user);
         } catch (PermissionException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Você não tem permissão para Excluir um Usuário."));
             logger.error(ex);
         } catch (ICRMException ex) {
             logger.error("Problema ao excluir um Usuário.", ex);
         }
-        user = new User();
+        this.user = new User();
+        this.response = new SecretQuestionResponse();
         this.editando = false;
         init();
     }
 
     public void cancelarEdicao() {
         this.user = new User();
+        this.response = new SecretQuestionResponse();
         this.editando = false;
+        init();
     }
 
     public void cancelarExclusao() {
         this.user = new User();
+        this.response = new SecretQuestionResponse();
     }
 }

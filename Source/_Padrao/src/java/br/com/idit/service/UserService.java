@@ -28,7 +28,7 @@ public class UserService implements Serializable {
     private static final Logger LOGGER;
     private UserDAO userDAO = new UserDAO();
     private User user;
-    
+
     static {
         LOGGER = Logger.getLogger(UserService.class);
     }
@@ -63,7 +63,7 @@ public class UserService implements Serializable {
     }
 
     public List<User> findAll() throws ICRMException {
-        if (!Security.checkPolicy(this.user, "listUser")) {
+        if (!Security.checkPolicy(this.user, "listUser", "insertUser")) {
             throw new PermissionException(user.getNmUser(), "listUser");
         }
         return userDAO.findAll();
@@ -89,10 +89,13 @@ public class UserService implements Serializable {
     }
 
     public User update(User t) throws ICRMException {
-        try {
-            t.setDsPassword(MD5.hashMD5(t.getDsPassword()));
-        } catch (NoSuchAlgorithmException ex) {
-            throw new ICRMException(ex);
+        final User compare = userDAO.findById(t.getCdUser());
+        if (!(t.getDsPassword().equals(compare.getDsPassword()))) {
+            try {
+                t.setDsPassword(MD5.hashMD5(t.getDsPassword()));
+            } catch (NoSuchAlgorithmException ex) {
+                throw new ICRMException(ex);
+            }
         }
         if (!Security.checkPolicy(this.user, "editUser")) {
             throw new PermissionException(user.getNmUser(), "editUser");

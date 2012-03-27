@@ -29,7 +29,7 @@ public class UserStatusConverter implements Converter {
         try {
             us = service.findByName(string);
         } catch (PermissionException ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Você não tem permissão para visualizar as informações de Grupos."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Você não tem permissão para visualizar as informações de Status dos Usuários."));
             logger.error(ex);
         } catch (ICRMException ex) {
             logger.error("Problema ao utilizar Converter", ex);

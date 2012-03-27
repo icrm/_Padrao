@@ -111,7 +111,7 @@ public class PolicyService implements Serializable {
      * @return List<Policy> - Lista com todos os Objetos
      */
     public List<Policy> findAll() throws ICRMException {
-        if (!Security.checkPolicy(this.user, LIST_PERMISSION)) {
+        if (!Security.checkPolicy(this.user, LIST_PERMISSION, "insertUser")) {
             throw new PermissionException(user.getNmUser(), LIST_PERMISSION);
         }
         return policyDAO.findAll();
@@ -148,6 +148,8 @@ public class PolicyService implements Serializable {
      *
      * @param policy - Objeto a ser atualizado.
      * @return Policy
+     * @throws ICRMException - Exceção
+     * @see @ICRMException
      */
     public Policy update(final Policy policy) throws ICRMException {
         if (!Security.checkPolicy(this.user, UPDATE_PERMISSION)) {

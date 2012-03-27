@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -93,7 +94,7 @@ public class User implements Serializable {
     @JoinColumn(name = "CD_GROUP")
     private Group group;
 
-    @OneToMany(mappedBy = "user", targetEntity = SecretQuestionResponse.class)
+    @OneToMany(mappedBy = "user", targetEntity = SecretQuestionResponse.class, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<SecretQuestionResponse> responses = new ArrayList<SecretQuestionResponse>();
 
     /**

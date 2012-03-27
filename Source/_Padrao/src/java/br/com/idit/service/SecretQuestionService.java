@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.idit.service;
 
 import br.com.idit.base.exception.ICRMException;
@@ -14,10 +10,6 @@ import java.io.Serializable;
 import java.util.List;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author reinaldo
- */
 public class SecretQuestionService implements Serializable {
     
     private static final long serialVersionUID = 8728349218231234L;
@@ -38,21 +30,28 @@ public class SecretQuestionService implements Serializable {
     }
 
     public SecretQuestion findByDescription(final String description) throws ICRMException {
-        if (!Security.checkPolicy(this.user, "getSecretQuestion")) {
+        if (!Security.checkPolicy(this.user, "getSecretQuestion", "insertUser")) {
             throw new PermissionException(user.getNmUser(), "getSecretQuestion");
         }
         return dao.findByDescription(description);
     }
 
+    public List<SecretQuestion> findAllActive() throws ICRMException {
+        if (!Security.checkPolicy(this.user, "listSecretQuestion", "insertUser")) {
+            throw new PermissionException(user.getNmUser(), "listSecretQuestion");
+        }
+        return dao.findAllActive();
+    }
+
     public List<SecretQuestion> findAll() throws ICRMException {
-        if (!Security.checkPolicy(this.user, "listSecretQuestion")) {
+        if (!Security.checkPolicy(this.user, "listSecretQuestion", "insertUser")) {
             throw new PermissionException(user.getNmUser(), "listSecretQuestion");
         }
         return dao.findAll();
     }
 
     public SecretQuestion findById(Object id) throws ICRMException {
-        if (!Security.checkPolicy(this.user, "getSecretQuestion")) {
+        if (!Security.checkPolicy(this.user, "getSecretQuestion", "insertUser")) {
             throw new PermissionException(user.getNmUser(), "getSecretQuestion");
         }
         return dao.findById(id);

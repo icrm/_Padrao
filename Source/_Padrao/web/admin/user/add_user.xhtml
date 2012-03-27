@@ -87,7 +87,8 @@
                         requiredMessage="Escolha uma Pergunta Secreta"
                         styleClass="size5">
                         <f:selectItem itemValue="" itemLabel="Selecione..." />
-                        <f:selectItems value="#{secretQuestionBean.listItems}" />
+                        <f:selectItems value="#{secretQuestionBean.activeListItems}" />
+                        <f:converter binding="#{secretQuestionBean.converter}" />
                     </h:selectOneMenu>
                     <h:message for="secretQuestion" styleClass="local-error" />
                     </p>

@@ -2,6 +2,7 @@ package br.com.idit.persistence.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ public class SecretQuestionResponse implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cdResponse;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "CD_USER")
     private User user;
 

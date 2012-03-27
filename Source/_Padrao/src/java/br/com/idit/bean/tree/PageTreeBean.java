@@ -29,6 +29,8 @@ public class PageTreeBean implements Serializable {
     }
 
     public PageTreeBean() {
+        this.node = new DefaultTreeNode("Aplicação", null);
+        init();
     }
 
     public TreeNode getNode() {
@@ -62,6 +64,8 @@ public class PageTreeBean implements Serializable {
         for (Module module : mb.getOrphanModules()) {
             LOGGER.debug("Montando Árvode de Módulos: Módulo [" + module.getNmModule() + "]");
         }
+        this.node = new DefaultTreeNode("Aplicação", null);
+        mb.init();
         getNodes(mb.getOrphanModules(), node);
     }
 

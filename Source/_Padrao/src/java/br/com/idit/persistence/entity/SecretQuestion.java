@@ -31,7 +31,7 @@ public class SecretQuestion implements Serializable {
     @NotEmpty(message = "A Frase de acesso não deve estar VAZIA.")
     private String dsQuestion;
 
-    @Column(name = "ACTIVE", insertable = false, updatable = false)
+    @Column(name = "ACTIVE")
     @Length(max = 1, message = "O Status não deve conter mais do que 1 caracter.")
     @NotEmpty(message = "O Status não deve estar VAZIO.")
     private String active;

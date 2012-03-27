@@ -68,10 +68,10 @@ public class Login {
             }
         } catch (LoginException ex) {
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(ex.getMessage()));
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), ex.getMessage()));
         } catch (InactiveUserException ex) {
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(ex.getMessage()));
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), ex.getMessage()));
         }
         return "";
     }

@@ -1,6 +1,7 @@
 package br.com.idit.persistence.dao;
 
 import br.com.idit.persistence.entity.SecretQuestion;
+import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -38,14 +39,14 @@ public class SecretQuestionDAO extends AbstractDAO<SecretQuestion> {
 
         LOGGER.debug("Definindo Query de Seleção.");
         criteria.where(cbuilder.equal(root.get(root.getModel()
-                .getSingularAttribute("dsPassphrase", String.class)), description));
+                .getSingularAttribute("dsQuestion", String.class)), description));
 
-        SecretQuestion passphrase = null;
+        SecretQuestion question = null;
         try {
             LOGGER.info("Recuperando registro da Entidade "
                     + getDomainClass().getName()
                     + " através da Descrição [" + description + "].");
-            passphrase = (SecretQuestion) getEntityManager().createQuery(criteria)
+            question = (SecretQuestion) getEntityManager().createQuery(criteria)
                     .getSingleResult();
         } catch (RuntimeException ex) {
             LOGGER.error("Erro ao recuperar Registro da Entidade "
@@ -55,7 +56,41 @@ public class SecretQuestionDAO extends AbstractDAO<SecretQuestion> {
 
         LOGGER.debug("Finalizando [FIND-BY-DESCRIPTION] da Entidade "
                 + getDomainClass().getName() + ".");
-        return passphrase;
+        return question;
     }
 
+    public List<SecretQuestion> findAllActive() {
+        LOGGER.debug("Iniciando [FIND-ALL-ACTIVE] da Entidade "
+                + getDomainClass().getName() + ".");
+        LOGGER.debug("Criando Instância de CriteriaBuilder.");
+        final CriteriaBuilder cbuilder
+                = getEntityManager().getCriteriaBuilder();
+
+        LOGGER.debug("Criando Instância de CriteriaQuery.");
+        final CriteriaQuery criteria = cbuilder.createQuery(SecretQuestion.class);
+
+        LOGGER.debug("Criando Instância de Root.");
+        final Root<SecretQuestion> root = criteria.from(SecretQuestion.class);
+
+        LOGGER.debug("Definindo Query de Seleção.");
+        criteria.where(cbuilder.equal(root.get(root.getModel()
+                .getSingularAttribute("active", String.class)), "S"));
+
+        List<SecretQuestion> questions = null;
+        try {
+            LOGGER.info("Recuperando registro da Entidade "
+                    + getDomainClass().getName()
+                    + " que estão Ativos.");
+            questions = getEntityManager().createQuery(criteria)
+                    .getResultList();
+        } catch (RuntimeException ex) {
+            LOGGER.error("Erro ao recuperar Registro da Entidade "
+                    + getDomainClass().getName()
+                    + " que estão Ativos.", ex);
+        }
+
+        LOGGER.debug("Finalizando [FIND-ALL-ACTIVE] da Entidade "
+                + getDomainClass().getName() + ".");
+        return questions;
+    }
 }

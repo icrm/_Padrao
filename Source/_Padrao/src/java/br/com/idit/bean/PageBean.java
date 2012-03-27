@@ -136,6 +136,7 @@ public class PageBean implements Serializable {
         this.fgMain = (this.page.getFgMain()==1) ? true : false;
         this.fgShowMenu = (this.page.getFgShowMenu()==1) ? false : true;
         this.editando = true;
+        this.getPages().remove(this.page);
     }
 
     public void confirmarEdicao() {

@@ -40,7 +40,7 @@ public class ModuleService implements Serializable {
     }
 
     public List<Module> findAllOrphans() throws ICRMException {
-        if (!Security.checkPolicy(this.user, "listModule")) {
+        if (!Security.checkPolicy(this.user, "listModule", "systemAccess")) {
             throw new PermissionException(user.getNmUser(), "listModule");
         }
         return dao.findAllOrphans();
@@ -61,7 +61,7 @@ public class ModuleService implements Serializable {
     }
 
     public List<Module> findAll() throws ICRMException {
-        if (!Security.checkPolicy(this.user, "listModule")) {
+        if (!Security.checkPolicy(this.user, "listModule", "systemAccess")) {
             throw new PermissionException(user.getNmUser(), "listModule");
         }
         return dao.findAll();
@@ -80,7 +80,7 @@ public class ModuleService implements Serializable {
     }
 
     public List<Module> findByFather(Module father) throws ICRMException {
-        if (!Security.checkPolicy(this.user, "listModule")) {
+        if (!Security.checkPolicy(this.user, "listModule", "systemAccess")) {
             throw new PermissionException(user.getNmUser(), "listModule");
         }
         return dao.findByFather(father);

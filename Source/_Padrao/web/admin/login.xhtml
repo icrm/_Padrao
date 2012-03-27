@@ -12,10 +12,10 @@
     </h:head>
     <h:body>
 
-        <div id="container">
+        <div id="container" style="width: 461px;">
             <h:form id="login">
                 <h1>Login</h1>
-                <h:messages id="msgs" styleClass="global-error" globalOnly=""/>
+                <h:messages id="msgs" errorClass="global-error" globalOnly="" infoClass="global-success" />
                 <fieldset id="inputs" class="login">
                     <h:outputLabel for="login" value="E-mail: " />
                     <h:inputText id="login" value="#{login.email}" required="true" requiredMessage="O Campo E-mail deve ser preenchido!" /><br />
@@ -29,14 +29,15 @@
                     <p:commandButton value="Entrar" action="#{login.login}" update="msgs" ajax="false">
                         <f:setPropertyActionListener target="#{login.redirectTo}" value="#{requestScope.redirectTo}" />
                     </p:commandButton>
-                    <h:commandLink value="Esqueceu a sua senha?" action="#{login.login}" />
+                    <a href="#{facesContext.externalContext.requestContextPath}/admin/recover_pass.xhtml">Esqueceu a sua senha?</a>
                 </fieldset>
             </h:form>
             <div id="footer">
                 <p id="copy">
                 <h:outputText value="&#169; Todos os direitos reservados - IDiT 2012" escape="true"/>
-                </p>
-                <p id="credits">
+                <a href="http://www.idit.com.br" target="_blank" title="IDiT" id="footer-logo">
+                    <h:graphicImage alt="IDiT" title="IDiT" value="/resources/images/idit_min_logo.png" />
+                </a>
                 </p>
             </div>
         </div>
